@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "201527730473",
+    "firebase_url": "https://hitchhike-702cb-default-rtdb.firebaseio.com",
+    "project_id": "hitchhike-702cb",
+    "storage_bucket": "hitchhike-702cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201527730473:android:c2a6a8c32de3d8bd339738",
+        "android_client_info": {
+          "package_name": "com.example.hitchhike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201527730473-ekdu85eh3ittd84kqiqgt8ltcgji96om.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYBeJvtQgfXChYRYF1KXjW8KdNwv49vJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201527730473-ekdu85eh3ittd84kqiqgt8ltcgji96om.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

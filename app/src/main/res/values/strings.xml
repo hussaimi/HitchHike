@@ -19,4 +19,11 @@
     <string name="save">Save</string>
     <string name="hint_pick_up_date">dd/mm/yyyy</string>
     <string name="hint_pick_up_time">hh:mm</string>
+    <string name="addTrip">Add Trip</string>
+    <string name="rider">Rider</string>
+    <string name="submit">Submit</string>
+    <string name="driver">Driver</string>
+    <string name="toLocation">To location</string>
+    <string name="fromLocation">From location</string>
+    <string name="looking_for">Looking For:</string>
 </resources>
