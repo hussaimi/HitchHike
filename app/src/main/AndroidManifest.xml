@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HitchHike">
         <activity
+            android:name=".MyProfile"
+            android:exported="false" />
+        <activity
             android:name=".login"
             android:exported="false" />
         <activity android:name=".AddTrip" />
