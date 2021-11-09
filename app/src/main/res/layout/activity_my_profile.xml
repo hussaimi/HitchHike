@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyProfile">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2MyProfile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageViewMyProfileUserPhoto"
+                android:layout_width="117dp"
+                android:layout_height="115dp"
+                app:srcCompat="@drawable/myprofilephotoplaceholder"
+                tools:layout_editor_absoluteX="147dp"
+                tools:layout_editor_absoluteY="27dp"
+                tools:srcCompat="@drawable/myprofilephotoplaceholder" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButtonMyProfileEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:backgroundTint="#3A50C6"
+                app:fabSize="mini"
+                app:srcCompat="@android:drawable/ic_menu_edit"
+                tools:layout_editor_absoluteX="336dp"
+                tools:layout_editor_absoluteY="652dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/editTextMyProfileFirstName"
+                android:layout_width="259dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:hint="First Name"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="76dp"
+                tools:layout_editor_absoluteY="191dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/editTextMyProfileLastName"
+                android:layout_width="259dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:hint="Last Name"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="76dp"
+                tools:layout_editor_absoluteY="249dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/editTextMyProfileEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="101dp"
+                tools:layout_editor_absoluteY="420dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/editTextMyProfilePhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:minHeight="48dp"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="101dp"
+                tools:layout_editor_absoluteY="362dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <ImageButton
+                android:id="@+id/imageButtonMyProfileUserID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="User Identification"
+                app:srcCompat="@android:drawable/ic_menu_gallery"
+                tools:layout_editor_absoluteX="177dp"
+                tools:layout_editor_absoluteY="518dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonMyProfileSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:backgroundTint="#3A50C6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:padding="10dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
