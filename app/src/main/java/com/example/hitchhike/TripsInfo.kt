@@ -1,12 +1,12 @@
 package com.example.hitchhike
 
 data class TripsInfo(
-    var From: String,
-    var To: String,
-    var Desc: String,
-    var Date: String,
-    var Time: String,
-    var NoOfPeople: String? = null,
+    var from: String? = null,
+    var to: String? = null,
+    var desc: String? = null,
+    var date: String? = null,
+    var time: String? = null,
+    var noOfPeople: String? = null,
     var userType: String? = null){
 
 }

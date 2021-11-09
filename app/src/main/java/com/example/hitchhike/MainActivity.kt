@@ -8,7 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
-import com.google.firebase.database.DatabaseReference
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -21,32 +23,54 @@ class MainActivity : AppCompatActivity() {
     private val fromLocation: EditText by lazy { findViewById(R.id.editTextFrom) }
     private val toLocation: EditText by lazy { findViewById(R.id.editTextTo) }
     private lateinit var dbReference: DatabaseReference
+    private lateinit var tripRecyclerView: RecyclerView
+    private lateinit var tripArrayList: ArrayList<TripsInfo>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        analytics = FirebaseAnalytics.getInstance(this)
+        tripRecyclerView = findViewById(R.id.tripList)
+        tripRecyclerView.layoutManager = LinearLayoutManager(this)
+        tripRecyclerView.setHasFixedSize(true)
+
+        tripArrayList = arrayListOf<TripsInfo>()
+
+        getTripData()
+
+        val submitButton = findViewById<Button>(R.id.btnFilter)
+        submitButton.setOnClickListener {
+//          setFilter so that cards dhow only data where from location and to location is same as entered by the user.
+        }
+
+
         val addTripButton = findViewById<Button>(R.id.btnAddTrip)
         addTripButton.setOnClickListener {
-            //Toast.makeText(this, "Testing", Toast.LENGTH_SHORT).show()
-//            analytics.logEvent("Button_CLicked", null)
             val intent = Intent(this, AddTrip::class.java).apply {
             }
             startActivity(intent)
         }
+    }
 
-        dbReference = Firebase.database.reference
-        val submitButton = findViewById<Button>(R.id.btnFilter)
-        submitButton.setOnClickListener {
-//            Toast.makeText(this, dbReference.toString(), Toast.LENGTH_SHORT).show()
-//            dbReference.child("Testing").push().setValue(mapOf("First Name" to fromLocation.text.toString())).addOnSuccessListener {
-//                Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show()
-//            }.addOnFailureListener {
-//                Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
-//            }
-        }
+    private fun getTripData() {
+        dbReference = FirebaseDatabase.getInstance().getReference("Trips")
+        dbReference.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    for(tripSnapshot in snapshot.children){
+                        val trip = tripSnapshot.getValue(TripsInfo::class.java)
+                        tripArrayList.add(trip!!)
+                    }
+                    tripRecyclerView.adapter = MyAdapter(tripArrayList)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     fun onRadioButtonClicked(view: View){

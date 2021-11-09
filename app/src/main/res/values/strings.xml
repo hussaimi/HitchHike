@@ -26,4 +26,6 @@
     <string name="toLocation">To location</string>
     <string name="fromLocation">From location</string>
     <string name="looking_for">Looking For:</string>
+    <string name="details">Details</string>
+    <string name="schedule">Schedule</string>
 </resources>

@@ -7,20 +7,29 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:id="@+id/linearLayoutFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="top"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/tripList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="10dp"
-        android:padding="10dp">
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -37,6 +46,7 @@
                 android:layout_weight="0.30"
                 android:ems="10"
                 android:hint="@string/fromLocation" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -58,7 +68,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingStart="10dp"
             android:paddingTop="0dp"
+            android:paddingEnd="10dp"
             android:paddingBottom="0dp">
 
             <TextView
@@ -70,13 +82,13 @@
                 android:textSize="17sp" />
 
             <RadioButton
+                android:id="@+id/radioBtnDriver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.30"
-                android:text="@string/driver"
-                android:id="@+id/radioBtnDriver"
+                android:ems="10"
                 android:onClick="onRadioButtonClicked"
-                android:ems="10" />
+                android:text="@string/driver" />
 
             <RadioButton
                 android:id="@+id/radioBtnRider"
@@ -92,37 +104,235 @@
                 android:id="@+id/btnFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/submit"
                 android:backgroundTint="#3A50C6"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.75" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/btnAddTrip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:ems="5"
-                    android:text="@string/addTrip"
-                    app:backgroundTint="#3A50C6" />
-            </LinearLayout>
+                android:text="@string/submit" />
         </LinearLayout>
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tripList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutFilter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnAddTrip"
+        tools:listitem="@layout/trip_item"
+        />
+
+    <Button
+        android:id="@+id/btnAddTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/addTrip"
+        android:backgroundTint="#3A50C6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tripList"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+<!--<TextView-->
+<!--android:id="@+id/textViewFrom"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="@string/from"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="parent"-->
+<!--app:layout_constraintRight_toLeftOf="@id/textViewFromLocation"-->
+<!--android:layout_margin="10dp"-->
+<!--android:paddingTop="10dp"-->
+<!--android:textSize="17sp"-->
+<!--android:textColor="@color/black"/>-->
+<!--<EditText-->
+<!--android:id="@+id/textViewFromLocation"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="Cincinnati"-->
+<!--app:layout_constraintLeft_toRightOf="@id/textViewFrom"-->
+<!--app:layout_constraintTop_toTopOf="parent"-->
+<!--app:layout_constraintRight_toLeftOf="@id/textViewTo"-->
+<!--android:layout_margin="10dp"-->
+<!--android:paddingTop="10dp"-->
+<!--android:textSize="17sp"-->
+<!--android:textColor="@color/black"/>-->
+<!--<TextView-->
+<!--android:id="@+id/textViewTo"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="To"-->
+<!--app:layout_constraintLeft_toRightOf="@id/textViewFromLocation"-->
+<!--app:layout_constraintTop_toTopOf="parent"-->
+<!--app:layout_constraintRight_toLeftOf="@id/textViewToLocation"-->
+<!--android:layout_margin="10dp"-->
+<!--android:paddingTop="10dp"-->
+<!--android:textSize="17sp"-->
+<!--android:textColor="@color/black"/>-->
+<!--<EditText-->
+<!--android:id="@+id/textViewToLocation"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="Cincinnati"-->
+<!--app:layout_constraintLeft_toRightOf="@id/textViewTo"-->
+<!--app:layout_constraintTop_toTopOf="parent"-->
+<!--app:layout_constraintRight_toRightOf="parent"-->
+<!--android:layout_margin="10dp"-->
+<!--android:paddingTop="10dp"-->
+<!--android:textSize="17sp"-->
+<!--android:textColor="@color/black"/>-->
+
+<!--<TextView-->
+<!--android:id="@+id/textViewLookingFor"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="@string/looking_for"-->
+<!--app:layout_constraintTop_toBottomOf="@id/textViewFrom"-->
+<!--app:layout_constraintLeft_toLeftOf="parent"-->
+<!--android:layout_margin="10dp"-->
+<!--android:textSize="17sp"-->
+<!--android:textColor="@color/black"/>-->
+
+<!--<RadioButton-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--app:layout_constraintTop_toBottomOf="@id/textViewFromLocation"-->
+<!--app:layout_constraintLeft_toRightOf="@id/textViewLookingFor"/>-->
+
+<!--<LinearLayout-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="fill_parent"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingBottom="10dp">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingStart="10dp"-->
+<!--            android:paddingEnd="10dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.11"-->
+<!--                android:text="@string/from"-->
+<!--                android:textColor="#040303"-->
+<!--                android:textSize="17sp" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/editTextFrom"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.30"-->
+<!--                android:ems="10"-->
+<!--                android:hint="@string/fromLocation" />-->
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.09"-->
+<!--                android:text="@string/to"-->
+<!--                android:textColor="#040303"-->
+<!--                android:textSize="17sp" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/editTextTo"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.30"-->
+<!--                android:ems="10"-->
+<!--                android:hint="@string/toLocation" />-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingTop="0dp"-->
+<!--            android:paddingBottom="0dp"-->
+<!--            android:paddingStart="10dp"-->
+<!--            android:paddingEnd="10dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.33"-->
+<!--                android:text="@string/looking_for"-->
+<!--                android:textColor="#040303"-->
+<!--                android:textSize="17sp" />-->
+
+<!--            <RadioButton-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.30"-->
+<!--                android:text="@string/driver"-->
+<!--                android:id="@+id/radioBtnDriver"-->
+<!--                android:onClick="onRadioButtonClicked"-->
+<!--                android:ems="10" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/radioBtnRider"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.30"-->
+<!--                android:checked="false"-->
+<!--                android:ems="10"-->
+<!--                android:onClick="onRadioButtonClicked"-->
+<!--                android:text="@string/rider" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btnFilter"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/submit"-->
+<!--                android:backgroundTint="#3A50C6"-->
+<!--                />-->
+<!--        </LinearLayout>-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/tripList"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingStart="10dp"-->
+<!--            android:paddingEnd="10dp">-->
+
+<!--            <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.75" />-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/btnAddTrip"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:ems="5"-->
+<!--                    android:text="@string/addTrip"-->
+<!--                    app:backgroundTint="#3A50C6" />-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>

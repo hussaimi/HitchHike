@@ -50,9 +50,9 @@ class AddTrip : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                     noOfPeople =  numberArray[position]
-                    Toast.makeText(this@AddTrip,
-                        "Selected Item:" + " " +
-                                "" + numberArray[position], Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@AddTrip,
+//                        "Selected Item:" + " " +
+//                                "" + numberArray[position], Toast.LENGTH_SHORT).show()
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
@@ -126,17 +126,17 @@ class AddTrip : AppCompatActivity() {
                     if (checked) {
                         radioButtonRider.isChecked = false
                         userType = "Driver"
-                        Toast.makeText(this@AddTrip,
-                            "Selected Item:" + " " +
-                                    "" + userType, Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@AddTrip,
+//                            "Selected Item:" + " " +
+//                                    "" + userType, Toast.LENGTH_SHORT).show()
                     }
                 radioButtonRider.id ->
                     if (checked) {
                         radioButtonDriver.isChecked = false
                         userType = "Rider"
-                        Toast.makeText(this@AddTrip,
-                            "Selected Item:" + " " +
-                                    "" + userType, Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@AddTrip,
+//                            "Selected Item:" + " " +
+//                                    "" + userType, Toast.LENGTH_SHORT).show()
                     }
             }
         }
