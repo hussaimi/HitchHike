@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         val submitButton = findViewById<Button>(R.id.btnFilter)
         submitButton.setOnClickListener {
 //          setFilter so that cards dhow only data where from location and to location is same as entered by the user.
+            Toast.makeText(this, "Testing", Toast.LENGTH_SHORT).show()
         }
 
 
