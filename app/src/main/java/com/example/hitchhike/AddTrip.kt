@@ -2,6 +2,7 @@ package com.example.hitchhike
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -90,6 +91,8 @@ class AddTrip : AppCompatActivity() {
 
         saveButton.setOnClickListener {
             writeNewTrip()
+            val intent = Intent(this@AddTrip, MainActivity::class.java).apply {}
+            startActivity(intent)
             //Toast.makeText(this, dbReference.toString(), Toast.LENGTH_SHORT).show()
         }
     }
@@ -110,7 +113,7 @@ class AddTrip : AppCompatActivity() {
         dbReference.child("Trips")
             .push()
             .setValue(trip)
-            .addOnSuccessListener { Toast.makeText(this@AddTrip, "Data push online correctly", Toast.LENGTH_SHORT).show() }
+            .addOnSuccessListener { Toast.makeText(this@AddTrip, "Trip Added Successfully", Toast.LENGTH_LONG).show() }
             .addOnFailureListener { Toast.makeText(this@AddTrip, it.message.toString(), Toast.LENGTH_SHORT).show() }
         //Toast.makeText(this, databaseReference.child("Trips").push().setValue(trip).isSuccessful.toString(), Toast.LENGTH_SHORT).show()
     }
