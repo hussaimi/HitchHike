@@ -3,6 +3,7 @@ package com.example.hitchhike
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -36,14 +37,33 @@ class MainActivity : AppCompatActivity() {
         tripRecyclerView.setHasFixedSize(true)
 
         tripArrayList = arrayListOf<TripsInfo>()
-
+        dbReference = FirebaseDatabase.getInstance().getReference("Trips")
         getTripData()
 
         val submitButton = findViewById<Button>(R.id.btnFilter)
         submitButton.setOnClickListener {
-//          setFilter so that cards dhow only data where from location and to location is same as entered by the user.
+            if (fromLocation.text.isEmpty()){
+                fromLocation.error = "Required"
+                return@setOnClickListener
+            } else if (toLocation.text.isEmpty()){
+                toLocation.error = "Required"
+                return@setOnClickListener
+            } else if (userType.isNullOrEmpty()){
+                Toast.makeText(this, "Please select 'Looking For'", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            } else {
+                getTripData()
+            }
         }
-
+        val clearFilterBtn = findViewById<Button>(R.id.btnClearFilter)
+        clearFilterBtn.setOnClickListener {
+            fromLocation.text = null
+            toLocation.text = null
+            radioButtonDriver.isChecked = false
+            radioButtonRider.isChecked = false
+            userType = null
+            getTripData()
+        }
 
         val addTripButton = findViewById<Button>(R.id.btnAddTrip)
         addTripButton.setOnClickListener {
@@ -54,13 +74,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getTripData() {
-        dbReference = FirebaseDatabase.getInstance().getReference("Trips")
         dbReference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()){
                     for(tripSnapshot in snapshot.children){
                         val trip = tripSnapshot.getValue(TripsInfo::class.java)
-                        tripArrayList.add(trip!!)
+                        if(fromLocation.text.isEmpty()  && toLocation.text.isEmpty() && userType.isNullOrEmpty()) {
+                            tripArrayList.add(trip!!)
+                        } else if (trip != null) {
+                            if (trip.from.equals(fromLocation.text.toString()) && trip.to.equals(toLocation.text.toString()) && trip.userType.equals(userType)){
+                                tripArrayList.clear()
+                                tripArrayList.add(trip!!)
+                            }
+                        }
                     }
                     tripRecyclerView.adapter = MyAdapter(tripArrayList)
                 }
@@ -84,17 +110,11 @@ class MainActivity : AppCompatActivity() {
                     if (checked) {
                         radioButtonRider.isChecked = false
                         userType = "Driver"
-                        Toast.makeText(this,
-                            "Selected Item:" + " " +
-                                    "" + userType, Toast.LENGTH_SHORT).show()
                     }
                 radioButtonRider.id ->
                     if (checked) {
                         radioButtonDriver.isChecked = false
                         userType = "Rider"
-                        Toast.makeText(this,
-                            "Selected Item:" + " " +
-                                    "" + userType, Toast.LENGTH_SHORT).show()
                     }
             }
         }

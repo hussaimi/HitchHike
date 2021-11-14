@@ -1,5 +1,6 @@
 package com.example.hitchhike
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,6 @@ class MyAdapter(private val tripList: ArrayList<TripsInfo>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = tripList[position]
-
         holder.from.text = currentItem.from
         holder.to.text = currentItem.to
         holder.data.text = currentItem.date
