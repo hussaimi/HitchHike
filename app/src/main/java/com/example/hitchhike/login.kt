@@ -1,5 +1,6 @@
 package com.example.hitchhike
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -33,7 +34,13 @@ class login : AppCompatActivity() {
                 return@setOnClickListener
 
             }else{
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                if(username == "admin" && password == "admin"){
+                    val intent = Intent(this, MainActivity::class.java).apply {
+                    }
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
