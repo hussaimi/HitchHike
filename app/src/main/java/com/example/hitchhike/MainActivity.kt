@@ -14,7 +14,6 @@ import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
 
-//    private lateinit var analytics: FirebaseAnalytics
     private val radioButtonDriver: RadioButton by lazy { findViewById(R.id.radioBtnDriver) }
     private val radioButtonRider: RadioButton by lazy { findViewById(R.id.radioBtnRider) }
     private var userType: String? = null
@@ -33,23 +32,28 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
         tripRecyclerView.layoutManager = LinearLayoutManager(this)
         tripRecyclerView.setHasFixedSize(true)
 
-        tripArrayList = arrayListOf<TripsInfo>()
+        tripArrayList = arrayListOf()
         dbReference = FirebaseDatabase.getInstance().getReference("Trips")
         getTripData()
 
         val submitButton = findViewById<Button>(R.id.btnFilter)
         submitButton.setOnClickListener {
-            if (fromLocation.text.isEmpty()){
-                fromLocation.error = "Required"
-                return@setOnClickListener
-            } else if (toLocation.text.isEmpty()){
-                toLocation.error = "Required"
-                return@setOnClickListener
-            } else if (userType.isNullOrEmpty()){
-                Toast.makeText(this, "Please select 'Looking For'", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            } else {
-                getTripData()
+            when {
+                fromLocation.text.isEmpty() -> {
+                    fromLocation.error = "Required"
+                    return@setOnClickListener
+                }
+                toLocation.text.isEmpty() -> {
+                    toLocation.error = "Required"
+                    return@setOnClickListener
+                }
+                userType.isNullOrEmpty() -> {
+                    Toast.makeText(this, "Please select 'Looking For'", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+                else -> {
+                    getTripData()
+                }
             }
         }
         val clearFilterBtn = findViewById<Button>(R.id.btnClearFilter)
@@ -74,6 +78,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
     private fun getTripData() {
         dbReference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                tripArrayList.clear()
                 if (snapshot.exists()){
                     for(tripSnapshot in snapshot.children){
                         val trip = tripSnapshot.getValue(TripsInfo::class.java)
@@ -82,7 +87,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
                         } else if (trip != null) {
                             if (trip.from.equals(fromLocation.text.toString()) && trip.to.equals(toLocation.text.toString()) && trip.userType.equals(userType)){
                                 tripArrayList.clear()
-                                tripArrayList.add(trip!!)
+                                tripArrayList.add(trip)
                             }
                         }
                     }
