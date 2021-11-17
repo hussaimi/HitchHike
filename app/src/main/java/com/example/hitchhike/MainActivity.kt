@@ -3,7 +3,6 @@ package com.example.hitchhike
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,10 +11,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
 
 //    private lateinit var analytics: FirebaseAnalytics
     private val radioButtonDriver: RadioButton by lazy { findViewById(R.id.radioBtnDriver) }
@@ -62,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             radioButtonDriver.isChecked = false
             radioButtonRider.isChecked = false
             userType = null
+            tripArrayList.clear()
             getTripData()
         }
 
@@ -88,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    tripRecyclerView.adapter = MyAdapter(tripArrayList)
+                    tripRecyclerView.adapter = MyAdapter(tripArrayList, this@MainActivity)
                 }
             }
 
@@ -97,6 +95,12 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onItemClick(position: Int) {
+        val intent = Intent(this, TripDetails::class.java)
+        intent.putExtra("TripInfo", tripArrayList[position])
+        startActivity(intent)
     }
 
     fun onRadioButtonClicked(view: View){
@@ -119,4 +123,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }

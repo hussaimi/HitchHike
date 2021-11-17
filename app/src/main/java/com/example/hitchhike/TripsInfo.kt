@@ -1,5 +1,7 @@
 package com.example.hitchhike
 
+import java.io.Serializable
+
 data class TripsInfo(
     var from: String? = null,
     var to: String? = null,
@@ -7,6 +9,4 @@ data class TripsInfo(
     var date: String? = null,
     var time: String? = null,
     var noOfPeople: String? = null,
-    var userType: String? = null){
-
-}
+    var userType: String? = null) : Serializable

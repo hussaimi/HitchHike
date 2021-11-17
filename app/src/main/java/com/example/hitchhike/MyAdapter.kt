@@ -1,15 +1,13 @@
 package com.example.hitchhike
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.ValueEventListener
 
-class MyAdapter(private val tripList: ArrayList<TripsInfo>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-
-
+class MyAdapter(private val tripList: ArrayList<TripsInfo>, private val listener: OnItemClickListener) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.trip_item, parent, false)
@@ -28,11 +26,24 @@ class MyAdapter(private val tripList: ArrayList<TripsInfo>) : RecyclerView.Adapt
         return tripList.size
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         val from : TextView = itemView.findViewById(R.id.textViewCardFrom)
         val to : TextView = itemView.findViewById(R.id.textViewCardTo)
         val data : TextView = itemView.findViewById(R.id.textViewCardDate)
         val time : TextView = itemView.findViewById(R.id.textViewCardTime)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position: Int = adapterPosition
+            if(position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
     }
 
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
 }
