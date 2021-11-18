@@ -13,20 +13,27 @@
         android:theme="@style/Theme.HitchHike">
         <activity
             android:name=".TripDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MyProfile"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".login">
+            android:name=".login"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
-        <activity android:name=".AddTrip" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".AddTrip"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
