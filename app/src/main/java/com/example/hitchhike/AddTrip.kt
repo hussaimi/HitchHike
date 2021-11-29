@@ -91,11 +91,19 @@ class AddTrip : AppCompatActivity() {
 
         saveButton.setOnClickListener {
             writeNewTrip()
-            val intent = Intent(this@AddTrip, MainActivity::class.java).apply {}
-            startActivity(intent)
+            onBackPressed()
             //Toast.makeText(this, dbReference.toString(), Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
+    }
+
     private fun updateDateInView() {
         val myFormat = "MM/dd/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)

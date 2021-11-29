@@ -76,6 +76,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
             }
             startActivity(intent)
         }
+
+
     }
 
     private fun getTripData() {
@@ -110,6 +112,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
         intent.putExtra("TripInfo", tripArrayList[position])
         startActivity(intent)
     }
+
 
     fun onRadioButtonClicked(view: View){
         if (view is RadioButton) {

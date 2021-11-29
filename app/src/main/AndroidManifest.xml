@@ -21,6 +21,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".login"
+            android:noHistory="true"
             android:screenOrientation="portrait">
 
             <intent-filter>
