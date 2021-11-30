@@ -1,11 +1,13 @@
-package com.example.hitchhike
+package com.example.hitchhike.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.ValueEventListener
+import com.example.hitchhike.R
+import com.example.hitchhike.model.TripsInfo
 
 class MyAdapter(private val tripList: ArrayList<TripsInfo>, private val listener: OnItemClickListener) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
@@ -31,9 +33,10 @@ class MyAdapter(private val tripList: ArrayList<TripsInfo>, private val listener
         val to : TextView = itemView.findViewById(R.id.textViewCardTo)
         val data : TextView = itemView.findViewById(R.id.textViewCardDate)
         val time : TextView = itemView.findViewById(R.id.textViewCardTime)
+        val detailButton : Button = itemView.findViewById(R.id.btnCardDetails)
 
         init {
-            itemView.setOnClickListener(this)
+            detailButton.setOnClickListener(this)
         }
         override fun onClick(v: View?) {
             val position: Int = adapterPosition

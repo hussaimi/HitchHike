@@ -1,11 +1,13 @@
-package com.example.hitchhike
+package com.example.hitchhike.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.example.hitchhike.R
+import com.example.hitchhike.model.TripsInfo
 
-class TripDetails : AppCompatActivity() {
+class TripDetailActivity : AppCompatActivity() {
 
     private val fromDetails: TextView by lazy { findViewById(R.id.txtViewFromDetail) }
     private val toDetails: TextView by lazy { findViewById(R.id.txtViewToDetails) }
@@ -19,6 +21,7 @@ class TripDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_details)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Trip Details"
 
         val trip = intent.getSerializableExtra("TripInfo") as? TripsInfo
@@ -34,5 +37,10 @@ class TripDetails : AppCompatActivity() {
         btnSchedule.setOnClickListener {
 
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

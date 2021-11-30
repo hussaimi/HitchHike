@@ -1,20 +1,24 @@
-package com.example.hitchhike
+package com.example.hitchhike.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.Toast
+import android.view.*
+import android.widget.*
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hitchhike.ui.adapters.MyAdapter
+import com.example.hitchhike.R
+import com.example.hitchhike.model.TripsInfo
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.firebase.database.*
 
-class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavigationItemSelectedListener {
 
     private val radioButtonDriver: RadioButton by lazy { findViewById(R.id.radioBtnDriver) }
     private val radioButtonRider: RadioButton by lazy { findViewById(R.id.radioBtnRider) }
@@ -24,12 +28,23 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
     private lateinit var dbReference: DatabaseReference
     private lateinit var tripRecyclerView: RecyclerView
     private lateinit var tripArrayList: ArrayList<TripsInfo>
-
+    private val drawerLayout: DrawerLayout by lazy { findViewById(R.id.drawerLayout) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main_nav)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        val navView = findViewById<NavigationView>(R.id.navView)
+        navView.setNavigationItemSelectedListener(this)
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar,
+            R.string.open_Nav_Drawer, R.string.close_Nav_Drawer
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
 
         tripRecyclerView = findViewById(R.id.tripList)
         tripRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -72,7 +87,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
 
         val addTripButton = findViewById<Button>(R.id.btnAddTrip)
         addTripButton.setOnClickListener {
-            val intent = Intent(this, AddTrip::class.java).apply {
+            val intent = Intent(this, AddTripActivity::class.java).apply {
             }
             startActivity(intent)
         }
@@ -108,7 +123,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(this, TripDetails::class.java)
+        val intent = Intent(this, TripDetailActivity::class.java)
         intent.putExtra("TripInfo", tripArrayList[position])
         startActivity(intent)
     }
@@ -135,5 +150,27 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item?.itemId == R.id.actionLogout){
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        drawerLayout.closeDrawer(GravityCompat.START)
+        when(item.itemId){
+            R.id.actionProfile -> startActivity(Intent(this, MyProfileActivity::class.java))
+        }
+        return true
+    }
 }

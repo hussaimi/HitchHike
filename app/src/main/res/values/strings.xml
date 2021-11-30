@@ -29,4 +29,7 @@
     <string name="details">Details</string>
     <string name="clear_filter">Clear Filter</string>
     <string name="schedule">Schedule</string>
+    <string name="my_profile">My Profile</string>
+    <string name="open_Nav_Drawer">Open Navigation Drawer</string>
+    <string name="close_Nav_Drawer">Close Navigation Drawer</string>
 </resources>
