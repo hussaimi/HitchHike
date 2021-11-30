@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".MainActivity">
+    tools:context=".ui.activities.LoginActivity">
 
     <TextView
         android:id="@+id/signin"
@@ -53,7 +53,7 @@
         android:inputType="textPassword"
         android:padding="20dp"/>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/loginbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

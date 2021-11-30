@@ -1,4 +1,4 @@
-package com.example.hitchhike
+package com.example.hitchhike.ui.activities
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -10,12 +10,14 @@ import android.widget.*
 import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
+import com.example.hitchhike.R
+import com.example.hitchhike.model.TripsInfo
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 
-class AddTrip : AppCompatActivity() {
+class AddTripActivity : AppCompatActivity() {
 
 
     val cal: Calendar by lazy { Calendar.getInstance() }
@@ -34,6 +36,7 @@ class AddTrip : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_trip)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Add Trip"
 
         val mTimePicker: TimePickerDialog
@@ -51,9 +54,6 @@ class AddTrip : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                     noOfPeople =  numberArray[position]
-//                    Toast.makeText(this@AddTrip,
-//                        "Selected Item:" + " " +
-//                                "" + numberArray[position], Toast.LENGTH_SHORT).show()
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
@@ -70,7 +70,7 @@ class AddTrip : AppCompatActivity() {
             }
         textViewDate.setOnClickListener {
             DatePickerDialog(
-                this@AddTrip,
+                this@AddTripActivity,
                 dateSetListener,
                 // set DatePickerDialog to point to today's date when it loads up
                 cal.get(Calendar.YEAR),
@@ -92,7 +92,6 @@ class AddTrip : AppCompatActivity() {
         saveButton.setOnClickListener {
             writeNewTrip()
             onBackPressed()
-            //Toast.makeText(this, dbReference.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -102,6 +101,11 @@ class AddTrip : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun updateDateInView() {
@@ -121,9 +125,8 @@ class AddTrip : AppCompatActivity() {
         dbReference.child("Trips")
             .push()
             .setValue(trip)
-            .addOnSuccessListener { Toast.makeText(this@AddTrip, "Trip Added Successfully", Toast.LENGTH_LONG).show() }
-            .addOnFailureListener { Toast.makeText(this@AddTrip, it.message.toString(), Toast.LENGTH_SHORT).show() }
-        //Toast.makeText(this, databaseReference.child("Trips").push().setValue(trip).isSuccessful.toString(), Toast.LENGTH_SHORT).show()
+            .addOnSuccessListener { Toast.makeText(this@AddTripActivity, "Trip Added Successfully", Toast.LENGTH_LONG).show() }
+            .addOnFailureListener { Toast.makeText(this@AddTripActivity, it.message.toString(), Toast.LENGTH_SHORT).show() }
     }
 
     fun onRadioButtonClicked(view: View){
@@ -137,43 +140,14 @@ class AddTrip : AppCompatActivity() {
                     if (checked) {
                         radioButtonRider.isChecked = false
                         userType = "Driver"
-//                        Toast.makeText(this@AddTrip,
-//                            "Selected Item:" + " " +
-//                                    "" + userType, Toast.LENGTH_SHORT).show()
                     }
                 radioButtonRider.id ->
                     if (checked) {
                         radioButtonDriver.isChecked = false
                         userType = "Rider"
-//                        Toast.makeText(this@AddTrip,
-//                            "Selected Item:" + " " +
-//                                    "" + userType, Toast.LENGTH_SHORT).show()
                     }
             }
         }
     }
 
 }
-
-
-//----------------------------- Extra ------------------------------------
-
-//        database.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                // inside the method of on Data change we are setting
-//                // our object class to our database reference.
-//                // data base reference will sends data to firebase.
-//                database.setValue(trip).isSuccessful
-//
-//                // after adding this data we are showing toast message.
-//                Toast.makeText(this@AddTrip, database.setValue(trip).isSuccessful.toString(), Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                // if the data is not added or it is cancelled then
-//                // we are displaying a failure toast message.
-//                Toast.makeText(this@AddTrip, "Fail to add data $error", Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-//        })
-//Toast.makeText(this, databaseReference.child("Trips").setValue(trip).toString(), Toast.LENGTH_SHORT).show()

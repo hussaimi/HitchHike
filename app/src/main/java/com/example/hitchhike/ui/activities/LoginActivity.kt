@@ -1,4 +1,4 @@
-package com.example.hitchhike
+package com.example.hitchhike.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,31 +6,29 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.hitchhike.R
+import com.example.hitchhike.databinding.ActivityLoginBinding
 
-class login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
-    private lateinit var Username : EditText
-    private lateinit var Password : EditText
-    private lateinit var loginbtn : Button
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        Username = findViewById(R.id.Username)
-        Password = findViewById(R.id.Password)
-        loginbtn = findViewById(R.id.loginbtn)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        loginbtn.setOnClickListener{
+        binding.loginbtn.setOnClickListener{
 
-            val username = Username.text.toString().trim()
-            val password = Password.text.toString().trim()
+            val username = binding.Username.text.toString().trim()
+            val password = binding.Password.text.toString().trim()
 
             if(username.isEmpty()){
-                Username.error = "Username Required"
+                binding.Username.error = "Username Required"
                 return@setOnClickListener
 
             }else if (password.isEmpty()){
-                Password.error = "Password Required"
+                binding.Password.error = "Password Required"
                 return@setOnClickListener
 
             }else{

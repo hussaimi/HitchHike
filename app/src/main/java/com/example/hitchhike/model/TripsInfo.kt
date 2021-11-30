@@ -1,4 +1,4 @@
-package com.example.hitchhike
+package com.example.hitchhike.model
 
 import java.io.Serializable
 
