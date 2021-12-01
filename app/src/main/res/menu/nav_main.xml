@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <item
         android:id="@+id/actionProfile"
-        android:title="@string/my_profile"
-        android:icon="@drawable/ic_profile"/>
+        android:icon="@drawable/ic_profile"
+        android:title="@string/my_profile" />
+    <item
+        android:id="@+id/actionMyRides"
+        android:icon="@drawable/ic_car"
+        android:title="@string/my_rides" />
     <item
         android:id="@+id/actionSettings"
-        android:title="Settings"
         android:icon="@drawable/ic_settings"
-        />
+        android:title="@string/settings" />
     <item
         android:id="@+id/actionAbout"
-        android:title="About"
         android:icon="@drawable/ic_about"
-        />
+        android:title="@string/about_us" />
+    <item
+        android:id="@+id/actionRate"
+        android:icon="@drawable/ic_baseline_star_rate_24"
+        android:title="Rate Us" />
+    <item
+        android:id="@+id/actionLogout"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="Logout"/>
 </menu>
+
+
+<!--<item-->
+<!--android:id="@+id/actionAbout"-->
+<!--android:icon="@drawable/ic_about"-->
+<!--android:title="About" />-->
+<!--<item-->
+<!--android:id="@+id/actionRate"-->
+<!--android:icon="@drawable/ic_baseline_star_rate_24"-->
+<!--android:title="Rate Us" />-->

@@ -150,27 +150,19 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item?.itemId == R.id.actionLogout){
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         drawerLayout.closeDrawer(GravityCompat.START)
         when(item.itemId){
             R.id.actionProfile -> startActivity(Intent(this, MyProfileActivity::class.java))
+            R.id.actionLogout -> logout()
         }
         return true
+    }
+
+    private fun logout() {
+        val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
     }
 }

@@ -22,13 +22,14 @@
         <!-- Required for Lollipop. -->
         <item name="android:overlapAnchor">false</item>
         <item name="android:dropDownVerticalOffset" tools:ignore="DuplicateDefinition">4.0dip</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="android:textColorSecondary">@color/white</item>
+<!--        <item name="android:textColorSecondary">@color/black</item>-->
     </style>
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">

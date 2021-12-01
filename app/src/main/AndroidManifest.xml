@@ -14,15 +14,15 @@
         <activity
             android:name=".ui.activities.TripDetailActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.MyProfileActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.LoginActivity"
             android:noHistory="true"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,10 +31,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.AddTripActivity"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait" />
 
         <activity android:name=".ui.activities.MainActivity"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
