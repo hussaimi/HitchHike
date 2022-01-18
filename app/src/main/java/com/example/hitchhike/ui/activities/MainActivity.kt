@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     private lateinit var dbReference: DatabaseReference
     private lateinit var tripRecyclerView: RecyclerView
     private lateinit var tripArrayList: ArrayList<TripsInfo>
+    private lateinit var tripIdArrayList: ArrayList<String>
     private val drawerLayout: DrawerLayout by lazy { findViewById(R.id.drawerLayout) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         tripRecyclerView.setHasFixedSize(true)
 
         tripArrayList = arrayListOf()
+        tripIdArrayList = arrayListOf()
         dbReference = FirebaseDatabase.getInstance().getReference("Trips")
         getTripData()
 
@@ -82,6 +84,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
             radioButtonRider.isChecked = false
             userType = null
             tripArrayList.clear()
+            tripIdArrayList.clear()
             getTripData()
         }
 
@@ -103,10 +106,13 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
                     for(tripSnapshot in snapshot.children){
                         val trip = tripSnapshot.getValue(TripsInfo::class.java)
                         if(fromLocation.text.isEmpty()  && toLocation.text.isEmpty() && userType.isNullOrEmpty()) {
+                            tripIdArrayList.add(tripSnapshot.key.toString())
                             tripArrayList.add(trip!!)
                         } else if (trip != null) {
                             if (trip.from.equals(fromLocation.text.toString()) && trip.to.equals(toLocation.text.toString()) && trip.userType.equals(userType)){
                                 tripArrayList.clear()
+                                tripIdArrayList.clear()
+                                tripIdArrayList.add(tripSnapshot.key.toString())
                                 tripArrayList.add(trip)
                             }
                         }
@@ -124,6 +130,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
 
     override fun onItemClick(position: Int) {
         val intent = Intent(this, TripDetailActivity::class.java)
+        Toast.makeText(this, tripIdArrayList[position], Toast.LENGTH_SHORT).show()
         intent.putExtra("TripInfo", tripArrayList[position])
         startActivity(intent)
     }
