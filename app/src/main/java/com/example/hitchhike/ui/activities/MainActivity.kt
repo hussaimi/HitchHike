@@ -130,7 +130,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
 
     override fun onItemClick(position: Int) {
         val intent = Intent(this, TripDetailActivity::class.java)
-        Toast.makeText(this, tripIdArrayList[position], Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, tripIdArrayList[position], Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, tripArrayList[position].userName, Toast.LENGTH_SHORT).show()
         intent.putExtra("TripInfo", tripArrayList[position])
         startActivity(intent)
     }
