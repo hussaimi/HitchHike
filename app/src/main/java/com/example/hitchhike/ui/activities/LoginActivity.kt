@@ -20,15 +20,15 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginbtn.setOnClickListener{
 
-            val username = binding.Username.text.toString().trim()
-            val password = binding.Password.text.toString().trim()
+            val username = binding.editTextEmail.text.toString().trim()
+            val password = binding.editTextPassword.text.toString().trim()
 
             if(username.isEmpty()){
-                binding.Username.error = "Username Required"
+                binding.editTextEmail.error = "Username Required"
                 return@setOnClickListener
 
             }else if (password.isEmpty()){
-                binding.Password.error = "Password Required"
+                binding.editTextPassword.error = "Password Required"
                 return@setOnClickListener
 
             }else{
@@ -41,5 +41,11 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun onCreateAccountClicked(view: android.view.View) {
+        val intent = Intent(this, SignUpActivity::class.java).apply {
+        }
+        startActivity(intent)
     }
 }
