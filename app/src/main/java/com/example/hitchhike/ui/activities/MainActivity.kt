@@ -16,6 +16,7 @@ import com.example.hitchhike.R
 import com.example.hitchhike.model.TripsInfo
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavigationItemSelectedListener {
@@ -37,6 +38,9 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+//        //Toast current userId from Firebase.
+//        Toast.makeText(this, FirebaseAuth.getInstance().uid.toString(), Toast.LENGTH_SHORT).show()
 
         val navView = findViewById<NavigationView>(R.id.navView)
         navView.setNavigationItemSelectedListener(this)
@@ -131,7 +135,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     override fun onItemClick(position: Int) {
         val intent = Intent(this, TripDetailActivity::class.java)
         //Toast.makeText(this, tripIdArrayList[position], Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, tripArrayList[position].userName, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, tripArrayList[position].userId, Toast.LENGTH_SHORT).show()
         intent.putExtra("TripInfo", tripArrayList[position])
         startActivity(intent)
     }
@@ -168,9 +172,10 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     }
 
     private fun logout() {
+        FirebaseAuth.getInstance().signOut()
         val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-            finish()
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
     }
 }

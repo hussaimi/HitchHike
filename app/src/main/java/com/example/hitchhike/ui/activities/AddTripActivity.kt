@@ -12,6 +12,7 @@ import java.util.*
 import android.widget.Toast
 import com.example.hitchhike.R
 import com.example.hitchhike.model.TripsInfo
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -38,6 +39,8 @@ class AddTripActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_trip)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Add Trip"
+
+        Toast.makeText(this, FirebaseAuth.getInstance().uid.toString(), Toast.LENGTH_SHORT).show()
 
         val mTimePicker: TimePickerDialog
         val hour = cal.get(Calendar.HOUR_OF_DAY)
@@ -120,7 +123,7 @@ class AddTripActivity : AppCompatActivity() {
         val desc = description.text.toString()
         val date = textViewDate.text.toString()
         val time = textViewTime.text.toString()
-        val trip = TripsInfo(fLocation, tLocation, desc, date, time, noOfPeople, userType)
+        val trip = TripsInfo(fLocation, tLocation, desc, date, time, noOfPeople, userType, FirebaseAuth.getInstance().uid.toString())
 
         dbReference.child("Trips")
             .push()
