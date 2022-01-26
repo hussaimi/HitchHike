@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         setSupportActionBar(toolbar)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-//        //Toast current userId from Firebase.
-//        Toast.makeText(this, FirebaseAuth.getInstance().uid.toString(), Toast.LENGTH_SHORT).show()
+        //Toast current userId from Firebase.
+        Toast.makeText(this, FirebaseAuth.getInstance().uid.toString(), Toast.LENGTH_SHORT).show()
 
         val navView = findViewById<NavigationView>(R.id.navView)
         navView.setNavigationItemSelectedListener(this)
@@ -166,6 +166,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         drawerLayout.closeDrawer(GravityCompat.START)
         when(item.itemId){
             R.id.actionProfile -> startActivity(Intent(this, MyProfileActivity::class.java))
+            R.id.actionNotification -> startActivity(Intent(this, NotificationsActivity::class.java))
             R.id.actionLogout -> logout()
         }
         return true

@@ -45,4 +45,5 @@
     <string name="create_new_account_sign_up">Create New Account? Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="enter_username">Enter Username</string>
+    <string name="notifications">Notifications</string>
 </resources>

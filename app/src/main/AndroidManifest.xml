@@ -12,11 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.activities.NotificationsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.SignUpActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.activities.TripDetailActivity"
             android:exported="false"
@@ -37,12 +38,11 @@
         </activity>
         <activity
             android:name=".ui.activities.AddTripActivity"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

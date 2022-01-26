@@ -8,6 +8,10 @@
         android:icon="@drawable/ic_profile"
         android:title="@string/my_profile" />
     <item
+        android:id="@+id/actionNotification"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/notifications"/>
+    <item
         android:id="@+id/actionMyRides"
         android:icon="@drawable/ic_car"
         android:title="@string/my_rides" />
