@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hitchhike.ui.adapters.MyAdapter
 import com.example.hitchhike.R
+import com.example.hitchhike.model.ScheduleRequestInfo
 import com.example.hitchhike.model.TripsInfo
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavigationItemSelectedListener {
 
@@ -27,9 +29,11 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     private val fromLocation: EditText by lazy { findViewById(R.id.editTextFrom) }
     private val toLocation: EditText by lazy { findViewById(R.id.editTextTo) }
     private lateinit var dbReference: DatabaseReference
+    private lateinit var scheduleDbReference: DatabaseReference
     private lateinit var tripRecyclerView: RecyclerView
     private lateinit var tripArrayList: ArrayList<TripsInfo>
     private lateinit var tripIdArrayList: ArrayList<String>
+    private lateinit var scheduleRequestArrayList: ArrayList<ScheduleRequestInfo>
     private val drawerLayout: DrawerLayout by lazy { findViewById(R.id.drawerLayout) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +43,11 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         setSupportActionBar(toolbar)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        //initializing scheduleRequestArrayList variable
+        scheduleRequestArrayList = arrayListOf()
+
         //Toast current userId from Firebase.
-        Toast.makeText(this, FirebaseAuth.getInstance().uid.toString(), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, FirebaseAuth.getInstance().uid.toString(), Toast.LENGTH_SHORT).show()
 
         val navView = findViewById<NavigationView>(R.id.navView)
         navView.setNavigationItemSelectedListener(this)
@@ -99,7 +106,35 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
             startActivity(intent)
         }
 
+        scheduleDbReference = FirebaseDatabase.getInstance().getReference("ScheduleRequests")
+        getRequestData()
 
+    }
+
+    private fun getRequestData() {
+        scheduleDbReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                scheduleRequestArrayList.clear()
+                if (snapshot.exists()) {
+                    for (scheduleSnapshot in snapshot.children) {
+                        val request = scheduleSnapshot.getValue(ScheduleRequestInfo::class.java)
+                        if (request != null) {
+                            if(request.tripOwnerId == FirebaseAuth.getInstance().uid.toString() && request.status == "pending"){
+                                scheduleRequestArrayList.add(request)
+                            }
+                        }
+                    }
+                }
+                if(scheduleRequestArrayList.size != 0){
+                    Toast.makeText(this@MainActivity, "You have a notification.", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     private fun getTripData() {
@@ -135,8 +170,13 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     override fun onItemClick(position: Int) {
         val intent = Intent(this, TripDetailActivity::class.java)
         //Toast.makeText(this, tripIdArrayList[position], Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, tripArrayList[position].userId, Toast.LENGTH_SHORT).show()
+//      Toast.makeText(this, tripArrayList[position].userId, Toast.LENGTH_SHORT).show()
+        if(tripArrayList[position].userId == FirebaseAuth.getInstance().uid){
+            intent.putExtra("ownerOfTrip", "true")
+        }
         intent.putExtra("TripInfo", tripArrayList[position])
+        intent.putExtra("TripOwnerId", tripArrayList[position].userId)
+        intent.putExtra("TripId", tripIdArrayList[position])
         startActivity(intent)
     }
 
@@ -166,10 +206,18 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         drawerLayout.closeDrawer(GravityCompat.START)
         when(item.itemId){
             R.id.actionProfile -> startActivity(Intent(this, MyProfileActivity::class.java))
-            R.id.actionNotification -> startActivity(Intent(this, NotificationsActivity::class.java))
+            R.id.actionNotification -> goToNotificationPage()
             R.id.actionLogout -> logout()
         }
         return true
+    }
+
+    private fun goToNotificationPage() {
+        val intent = Intent(this, NotificationsActivity::class.java)
+        if(scheduleRequestArrayList.isNotEmpty()){
+            intent.putExtra("requests", scheduleRequestArrayList)
+        }
+        startActivity(intent)
     }
 
     private fun logout() {

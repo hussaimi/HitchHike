@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import com.example.hitchhike.R
-import com.example.hitchhike.model.NotificationsInfo
+import com.example.hitchhike.model.ScheduleRequestInfo
 
-class NotificationAdapter(private val context: Activity, private val arrayList: ArrayList<NotificationsInfo>) :
-    ArrayAdapter<NotificationsInfo> (context, R.layout.list_items, arrayList){
+class NotificationAdapter(private val context: Activity, private val arrayList: ArrayList<ScheduleRequestInfo>) :
+    ArrayAdapter<ScheduleRequestInfo> (context, R.layout.list_items, arrayList){
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -19,8 +20,11 @@ class NotificationAdapter(private val context: Activity, private val arrayList: 
 
         val notificationMessage: TextView = view.findViewById(R.id.textViewNotification)
 
-        notificationMessage.text = "Ride Request From " + arrayList[position].senderID
-
+        if(arrayList[position].requesterId == null){
+            notificationMessage.text = "No Ride Request at the moment"
+        } else {
+            notificationMessage.text = "Ride Request From " + arrayList[position].requesterId
+        }
         return view
     }
 
