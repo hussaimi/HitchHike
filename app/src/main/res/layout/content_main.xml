@@ -43,7 +43,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#3A50C6"
+        android:backgroundTint="#8B0000"
         android:text="@string/clear_filter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -138,8 +138,8 @@
                 android:id="@+id/btnFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#3A50C6"
-                android:text="@string/submit" />
+                android:backgroundTint="#355E3B"
+                android:text="Search" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -2,10 +2,8 @@ package com.example.hitchhike.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import com.example.hitchhike.R
+import com.example.hitchhike.databinding.ActivityTripDetailsBinding
 import com.example.hitchhike.model.ScheduleRequestInfo
 import com.example.hitchhike.model.TripsInfo
 import com.google.firebase.auth.FirebaseAuth
@@ -15,56 +13,89 @@ import com.google.firebase.ktx.Firebase
 
 class TripDetailActivity : AppCompatActivity() {
 
-    private val fromDetails: TextView by lazy { findViewById(R.id.txtViewFromDetail) }
-    private val toDetails: TextView by lazy { findViewById(R.id.txtViewToDetails) }
-    private val descDetails: TextView by lazy { findViewById(R.id.txtViewDescDetail) }
-    private val dateDetails: TextView by lazy { findViewById(R.id.txtViewDateDetail) }
-    private val timeDetails: TextView by lazy { findViewById(R.id.txtViewTimeDetail) }
-    private val noOfPeopleDetails: TextView by lazy { findViewById(R.id.txtViewNoOfPeopleDetail) }
-    private val lookingForDetails: TextView by lazy { findViewById(R.id.txtViewLookinForDetail) }
-    private val btnSchedule: Button by lazy { findViewById(R.id.btnSchedule) }
     private lateinit var dbReference: DatabaseReference
+    private lateinit var scheduleDbReference: DatabaseReference
+    private lateinit var binding: ActivityTripDetailsBinding
+    private lateinit var tripOwnerId: String
+    private lateinit var myId: String
+    private lateinit var tripId: String
+    private var rideExist = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trip_details)
+        binding = ActivityTripDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Trip Details"
 
         if(intent.hasExtra("ownerOfTrip")){
             if(intent.getStringExtra("ownerOfTrip") == "true"){
-                btnSchedule.isEnabled = false
+                binding.btnSchedule.isEnabled = false
             }
         }
 
         val trip = intent.getSerializableExtra("TripInfo") as? TripsInfo
-        val myId = FirebaseAuth.getInstance().uid.toString()
-        val tripOwnerId = intent.getStringExtra("TripOwnerId")
-        val tripId = intent.getStringExtra("TripId")
+        myId = FirebaseAuth.getInstance().uid.toString()
+        tripOwnerId = intent.getStringExtra("TripOwnerId").toString()
+        tripId = intent.getStringExtra("TripId").toString()
 
         if (trip != null) {
-            fromDetails.text = trip.from
-            toDetails.text = trip.to
-            descDetails.text = trip.desc
-            dateDetails.text = trip.date
-            timeDetails.text = trip.time
-            noOfPeopleDetails.text = trip.noOfPeople
-            lookingForDetails.text = trip.userType
+            binding.txtViewFromDetail.text = trip.from
+            binding.txtViewToDetails.text = trip.to
+            binding.txtViewDescDetail.text = trip.desc
+            binding.txtViewDateDetail.text = trip.date
+            binding.txtViewTimeDetail.text = trip.time
+            binding.txtViewNoOfPeopleDetail.text = trip.noOfPeople
+            binding.txtViewLookinForDetail.text = trip.userType
 
-            Toast.makeText(this, myId + " " +tripOwnerId + " " + tripId, Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, myId + " " +tripOwnerId + " " + tripId, Toast.LENGTH_LONG).show()
         }
 
         dbReference = Firebase.database.reference
-        btnSchedule.setOnClickListener {
-            //check if the request already exist in database using dataSnapshot.
+        scheduleDbReference = FirebaseDatabase.getInstance().getReference("ScheduleRequests")
+
+        //check if the request already exist in database using dataSnapshot.
+        checkRequestExistence()
+
+        binding.btnSchedule.setOnClickListener {
             val status = "pending"
             val scheduleRequest = ScheduleRequestInfo(myId, tripOwnerId, tripId, status)
             dbReference.child("ScheduleRequests")
                 .push()
                 .setValue(scheduleRequest)
-                .addOnSuccessListener { Toast.makeText(this, "Request Send", Toast.LENGTH_LONG).show() }
-                .addOnFailureListener { Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show() }
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Request Send", Toast.LENGTH_LONG).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(
+                        this,
+                        it.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
+    }
+
+    private fun checkRequestExistence() {
+        scheduleDbReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (scheduleSnapshot in snapshot.children) {
+                        val request = scheduleSnapshot.getValue(ScheduleRequestInfo::class.java)
+                        if (request != null) {
+                            if(request.requesterId == myId && request.tripOwnerId == tripOwnerId && request.status == "pending"){
+                                rideExist = 0
+                                binding.btnSchedule.isEnabled = false
+                                binding.btnSchedule.text = "Request Exist"
+                            }
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -9,12 +9,19 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.hitchhike.R
 import com.example.hitchhike.model.ScheduleRequestInfo
+import com.example.hitchhike.model.TripsInfo
+import com.example.hitchhike.model.userInfo
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class NotificationAdapter(private val context: Activity, private val arrayList: ArrayList<ScheduleRequestInfo>) :
     ArrayAdapter<ScheduleRequestInfo> (context, R.layout.list_items, arrayList){
 
+    private lateinit var dbReference: DatabaseReference
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
+        dbReference = Firebase.database.reference
         val inflater: LayoutInflater = LayoutInflater.from(context)
         val view: View = inflater.inflate(R.layout.list_items, null)
 
@@ -23,7 +30,17 @@ class NotificationAdapter(private val context: Activity, private val arrayList: 
         if(arrayList[position].requesterId == null){
             notificationMessage.text = "No Ride Request at the moment"
         } else {
-            notificationMessage.text = "Ride Request From " + arrayList[position].requesterId
+            val requesterId = arrayList[position].requesterId
+            if (requesterId != null) {
+                dbReference.child("Users").child(requesterId).get().addOnSuccessListener {
+                    val user = it.getValue(userInfo::class.java)
+                    if (user != null) {
+                        notificationMessage.text = "Ride Request From " + user.fullName.toString()
+                    }
+                }.addOnFailureListener{
+//                    Log.e("firebase", "Error getting data", it)
+                }
+            }
         }
         return view
     }
