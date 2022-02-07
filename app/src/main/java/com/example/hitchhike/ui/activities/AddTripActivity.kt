@@ -3,6 +3,7 @@ package com.example.hitchhike.ui.activities
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,12 +11,16 @@ import android.widget.*
 import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.hitchhike.R
 import com.example.hitchhike.model.TripsInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 
 class AddTripActivity : AppCompatActivity() {
@@ -34,6 +39,7 @@ class AddTripActivity : AppCompatActivity() {
     private val saveButton: Button by lazy { findViewById(R.id.btnSubmit) }
     private lateinit var dbReference: DatabaseReference
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_trip)
@@ -71,6 +77,7 @@ class AddTripActivity : AppCompatActivity() {
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 updateDateInView()
             }
+
         textViewDate.setOnClickListener {
             DatePickerDialog(
                 this@AddTripActivity,
@@ -83,7 +90,7 @@ class AddTripActivity : AppCompatActivity() {
         }
 
         mTimePicker = TimePickerDialog(this,
-            { _, hourOfDay, minute -> textViewTime.text = String.format("%02d : %02d", hourOfDay, minute) }, hour, minute, true)
+            { _, hourOfDay, minute -> textViewTime.text = updateTime(hourOfDay, minute) }, hour, minute, false)
 
         textViewTime.setOnClickListener {
             mTimePicker.show()
@@ -115,6 +122,13 @@ class AddTripActivity : AppCompatActivity() {
         val myFormat = "MM/dd/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         textViewDate.text = sdf.format(cal.time)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun updateTime(hourOfDay: Int, minutes: Int): String {
+        //16:20:00 AM
+        var time = LocalTime.of(hourOfDay, minutes)
+        return time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
     }
 
     private fun writeNewTrip(){

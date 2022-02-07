@@ -47,8 +47,6 @@ class TripDetailActivity : AppCompatActivity() {
             binding.txtViewTimeDetail.text = trip.time
             binding.txtViewNoOfPeopleDetail.text = trip.noOfPeople
             binding.txtViewLookinForDetail.text = trip.userType
-
-            //Toast.makeText(this, myId + " " +tripOwnerId + " " + tripId, Toast.LENGTH_LONG).show()
         }
 
         dbReference = Firebase.database.reference
@@ -83,7 +81,7 @@ class TripDetailActivity : AppCompatActivity() {
                     for (scheduleSnapshot in snapshot.children) {
                         val request = scheduleSnapshot.getValue(ScheduleRequestInfo::class.java)
                         if (request != null) {
-                            if(request.requesterId == myId && request.tripOwnerId == tripOwnerId && request.status == "pending"){
+                            if(request.requesterId == myId && request.tripOwnerId == tripOwnerId && request.rideId == tripId && request.status == "pending"){
                                 rideExist = 0
                                 binding.btnSchedule.isEnabled = false
                                 binding.btnSchedule.text = "Request Exist"

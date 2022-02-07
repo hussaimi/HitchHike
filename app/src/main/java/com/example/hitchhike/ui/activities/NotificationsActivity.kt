@@ -52,35 +52,6 @@ class NotificationsActivity : AppCompatActivity() {
                 intent.putExtra("requesterId", requesterId)
                 startActivity(intent)
 
-            // fetching trip information from firebase for selected trip
-//                if (tripId != null) {
-//                    dbReference.child("Trips").child(tripId).get().addOnSuccessListener {
-//                        tripInfo = it.getValue(TripsInfo::class.java)!!
-//                        if (tripInfo != null) {
-//                            //sending trip information as a data class to notification detail activity
-//                            tripArrayList.add(tripInfo)
-////                                intent.putExtra("tripInfo", tripInfo)
-//                        }
-//                    }.addOnFailureListener{
-//                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                //fetching requester information from firebase
-//                if (requesterId != null) {
-//                    dbReference.child("Users").child(requesterId).get().addOnSuccessListener {
-//                        user = it.getValue(userInfo::class.java)!!
-//                        if (user != null) {
-//                            //sending requester information as a data class to notification detail activity
-////                            intent.putExtra("user", user)
-//                            userArrayList.add(user)
-//                        }
-//                    }.addOnFailureListener{
-//                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-
-                //Send trip information and requester information to notification details class
-
             }
         } else {
             arrayList.add(ScheduleRequestInfo(null, null, null, null))
