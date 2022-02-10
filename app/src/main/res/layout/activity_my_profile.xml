@@ -31,8 +31,6 @@
                 android:layout_width="117dp"
                 android:layout_height="115dp"
                 app:srcCompat="@drawable/myprofilephotoplaceholder"
-                tools:layout_editor_absoluteX="147dp"
-                tools:layout_editor_absoluteY="27dp"
                 tools:srcCompat="@drawable/myprofilephotoplaceholder" />
 
         </LinearLayout>
@@ -66,41 +64,17 @@
             android:padding="10dp">
 
             <EditText
-                android:id="@+id/editTextMyProfileFirstName"
+                android:id="@+id/editTextMyProfileFullName"
                 android:layout_width="259dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif"
-                android:hint="First Name"
+                android:hint="Full Name"
                 android:inputType="text"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textSize="18sp"
-                tools:layout_editor_absoluteX="76dp"
-                tools:layout_editor_absoluteY="191dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <EditText
-                android:id="@+id/editTextMyProfileLastName"
-                android:layout_width="259dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif"
-                android:hint="Last Name"
-                android:inputType="text"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="76dp"
-                tools:layout_editor_absoluteY="249dp" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -122,8 +96,7 @@
                 android:minHeight="48dp"
                 android:textAlignment="center"
                 android:textSize="18sp"
-                tools:layout_editor_absoluteX="101dp"
-                tools:layout_editor_absoluteY="420dp" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -145,29 +118,27 @@
                 android:minHeight="48dp"
                 android:textAlignment="center"
                 android:textSize="18sp"
-                tools:layout_editor_absoluteX="101dp"
-                tools:layout_editor_absoluteY="362dp" />
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="15dp">
+<!--        <LinearLayout-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="15dp">-->
 
-            <ImageButton
-                android:id="@+id/imageButtonMyProfileUserID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="User Identification"
-                app:srcCompat="@android:drawable/ic_menu_gallery"
-                tools:layout_editor_absoluteX="177dp"
-                tools:layout_editor_absoluteY="518dp" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/imageButtonMyProfileUserID"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:contentDescription="User Identification"-->
+<!--                app:srcCompat="@android:drawable/ic_menu_gallery"-->
+<!--                tools:layout_editor_absoluteX="177dp"-->
+<!--                tools:layout_editor_absoluteY="518dp" />-->
 
-        </LinearLayout>
-
+<!--        </LinearLayout>-->
     </LinearLayout>
 
     <Button
@@ -175,10 +146,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
-        app:backgroundTint="#3A50C6"
+        app:backgroundTint="#11701d"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2MyProfile"
         android:padding="10dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
