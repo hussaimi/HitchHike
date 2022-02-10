@@ -14,6 +14,8 @@ class NotificationDetailActivity : AppCompatActivity() {
 
     private lateinit var dbReference: DatabaseReference
     private lateinit var binding: ActivityNotificationDetailBinding
+    private lateinit var scheduleRequestKey: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationDetailBinding.inflate(layoutInflater)
@@ -23,8 +25,13 @@ class NotificationDetailActivity : AppCompatActivity() {
 
         var tripId = intent.getStringExtra("tripId")
         var requesterId = intent.getStringExtra("requesterId")
+        scheduleRequestKey = intent.getStringExtra("requestKey").toString()
 
         dbReference = Firebase.database.reference
+
+        if (scheduleRequestKey != null){
+            Toast.makeText(this, scheduleRequestKey, Toast.LENGTH_SHORT).show()
+        }
 
         //fetching trip information from firebase for selected trip
         if (tripId != null) {
@@ -52,6 +59,14 @@ class NotificationDetailActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnAccept.setOnClickListener {
+            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status").setValue("accept")
+        }
+
+        binding.btnDecline.setOnClickListener {
+            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status").setValue("decline")
+        }
+
     }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -59,7 +74,7 @@ class NotificationDetailActivity : AppCompatActivity() {
     }
 }
 
-// select * from scheduleRequest where rideId = ________
+//select * from scheduleRequest where rideId = ________
 //dbReference = FirebaseDatabase.getInstance().getReference("ScheduleRequests")
 //val query = dbReference.orderByChild("rideId").equalTo("-MttG_j0SaRh-0wK5Cm1")
 //query.addListenerForSingleValueEvent(object: ValueEventListener {

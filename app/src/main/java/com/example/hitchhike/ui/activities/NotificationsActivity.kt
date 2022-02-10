@@ -26,6 +26,7 @@ class NotificationsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationsBinding
     private lateinit var arrayList: ArrayList<ScheduleRequestInfo>
     private lateinit var scheduleRequestArrayList: ArrayList<ScheduleRequestInfo>
+    private lateinit var scheduleRequestKeyArrayList: ArrayList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +37,11 @@ class NotificationsActivity : AppCompatActivity() {
 
         arrayList = ArrayList()
         scheduleRequestArrayList = ArrayList()
+        scheduleRequestKeyArrayList = arrayListOf()
 
         if (intent.hasExtra("requests")) {
             scheduleRequestArrayList = intent.getSerializableExtra("requests") as ArrayList<ScheduleRequestInfo>
+            scheduleRequestKeyArrayList = intent.getStringArrayListExtra("requestKeys") as ArrayList<String>
             binding.listViewNotification.isClickable = true
             binding.listViewNotification.adapter = NotificationAdapter(this, scheduleRequestArrayList)
             binding.listViewNotification.setOnItemClickListener { parent, view, position, l ->
@@ -50,6 +53,7 @@ class NotificationsActivity : AppCompatActivity() {
                 val intent = Intent(this, NotificationDetailActivity::class.java)
                 intent.putExtra("tripId", tripId)
                 intent.putExtra("requesterId", requesterId)
+                intent.putExtra("requestKey", scheduleRequestKeyArrayList[position])
                 startActivity(intent)
 
             }

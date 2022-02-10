@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hitchhike.ui.adapters.MyAdapter
 import com.example.hitchhike.R
+import com.example.hitchhike.databinding.ContentMainBinding
 import com.example.hitchhike.model.ScheduleRequestInfo
 import com.example.hitchhike.model.TripsInfo
 import com.google.android.material.navigation.NavigationView
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     private lateinit var tripArrayList: ArrayList<TripsInfo>
     private lateinit var tripIdArrayList: ArrayList<String>
     private lateinit var scheduleRequestArrayList: ArrayList<ScheduleRequestInfo>
+    private lateinit var scheduleRequestKeyArrayList: ArrayList<String>
     private val drawerLayout: DrawerLayout by lazy { findViewById(R.id.drawerLayout) }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -52,9 +54,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
 
         //initializing scheduleRequestArrayList variable
         scheduleRequestArrayList = arrayListOf()
-
-        //Toast current userId from Firebase.
-        //Toast.makeText(this, FirebaseAuth.getInstance().uid.toString(), Toast.LENGTH_SHORT).show()
+        scheduleRequestKeyArrayList = arrayListOf()
 
         val navView = findViewById<NavigationView>(R.id.navView)
         navView.setNavigationItemSelectedListener(this)
@@ -135,13 +135,14 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
                         if (request != null) {
                             if(request.tripOwnerId == FirebaseAuth.getInstance().uid.toString() && request.status == "pending"){
                                 scheduleRequestArrayList.add(request)
+                                scheduleRequestKeyArrayList.add(scheduleSnapshot.key.toString())
                             }
 
                             // if request.status is changed to decline, then store request data to another list to show user the notification
                             // that the ride request has been declined.
 
                             /* if the trip has expired and the status is changed to remove then delete
-                               .. that instance from the scheduleRequest table*/
+                               .. that instance from the scheduleRequest table */
                         }
                     }
                 }
@@ -158,12 +159,12 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     }
 
     private fun getTripData() {
-        // while fetching data for all the trips, check if the dates for particular rides are still valid
-        // if not valid then call removeNode() function to remove that node from the trips table
-        // Also store the Id of all the remove nodes inside a list
-        // Use those keys from the removed trips list, and fetch each node from scheduleRequest table containing that tripId
-        // change the status of those requests to "removed"
-
+        /* while fetching data for all the trips, check if the dates for particular rides are still valid
+           if not valid then call removeNode() function to remove that node from the trips table
+           Also store the Id of all the remove nodes inside a list
+           Use those keys from the removed trips list, and fetch each node from scheduleRequest table containing that tripId
+           change the status of those requests to "removed"
+           */
         dbReference.addValueEventListener(object : ValueEventListener{
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -193,7 +194,6 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
     }
 
@@ -280,6 +280,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         val intent = Intent(this, NotificationsActivity::class.java)
         if(scheduleRequestArrayList.isNotEmpty()){
             intent.putExtra("requests", scheduleRequestArrayList)
+            intent.putExtra("requestKeys", scheduleRequestKeyArrayList)
         }
         startActivity(intent)
     }
