@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.activities.HomePageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.NotificationDetailActivity"
             android:exported="false" />
         <activity

@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
 
         <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
-        <!-- Customize your theme here. -->
+
     </style>
 
     <style name="OverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">

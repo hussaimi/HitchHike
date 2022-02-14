@@ -107,36 +107,9 @@
             android:orientation="horizontal"
             android:paddingBottom="0dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.30"
-                android:text="@string/looking_for"
-                android:textColor="#040303"
-                android:textSize="17sp" />
-
-            <RadioButton
-                android:id="@+id/radioBtnDriver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:ems="10"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/driver" />
-
-            <RadioButton
-                android:id="@+id/radioBtnRider"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:checked="false"
-                android:ems="10"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/rider" />
-
             <Button
                 android:id="@+id/btnFilter"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#355E3B"
                 android:text="Search" />

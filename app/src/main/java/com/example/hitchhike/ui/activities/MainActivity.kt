@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     private lateinit var scheduleRequestArrayList: ArrayList<ScheduleRequestInfo>
     private lateinit var scheduleRequestKeyArrayList: ArrayList<String>
     private val drawerLayout: DrawerLayout by lazy { findViewById(R.id.drawerLayout) }
+    private lateinit var userIs: String
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +51,13 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         setContentView(R.layout.activity_main_nav)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+
+        //retrieve intent from homePageActivity
+        if(intent.hasExtra("userIs")){
+            userIs = intent.getStringExtra("userIs").toString()
+        }
+        Toast.makeText(this, userIs, Toast.LENGTH_SHORT).show()
 
         //initializing scheduleRequestArrayList variable
         scheduleRequestArrayList = arrayListOf()
@@ -172,18 +179,23 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
                 if (snapshot.exists()){
                     for(tripSnapshot in snapshot.children){
                         val trip = tripSnapshot.getValue(TripsInfo::class.java)
-                        if(fromLocation.text.isEmpty()  && toLocation.text.isEmpty() && userType.isNullOrEmpty()) {
+                        if(fromLocation.text.isEmpty()  && toLocation.text.isEmpty() ) { //&& userType.isNullOrEmpty()
                             if (trip != null) {
-                                checkTripExpiration(trip, tripSnapshot.key.toString())
+                                if(!(trip.userType.equals(userIs))){
+                                    Log.i("userType", "Match")
+                                    checkTripExpiration(trip, tripSnapshot.key.toString())
+                                    tripIdArrayList.add(tripSnapshot.key.toString())
+                                    tripArrayList.add(trip)
+                                }
                             }
-                            tripIdArrayList.add(tripSnapshot.key.toString())
-                            tripArrayList.add(trip!!)
                         } else if (trip != null) {
-                            if (trip.from.equals(fromLocation.text.toString()) && trip.to.equals(toLocation.text.toString()) && trip.userType.equals(userType)){
-                                tripArrayList.clear()
-                                tripIdArrayList.clear()
-                                tripIdArrayList.add(tripSnapshot.key.toString())
-                                tripArrayList.add(trip)
+                            if(!(trip.userType.equals(userIs))){
+                                if (trip.from.equals(fromLocation.text.toString()) && trip.to.equals(toLocation.text.toString())){ //&& trip.userType.equals(userType)
+                                    tripArrayList.clear()
+                                    tripIdArrayList.clear()
+                                    tripIdArrayList.add(tripSnapshot.key.toString())
+                                    tripArrayList.add(trip)
+                                }
                             }
                         }
                     }
@@ -245,26 +257,26 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     }
 
 
-    fun onRadioButtonClicked(view: View){
-        if (view is RadioButton) {
-            // Is the button now checked?
-            val checked = view.isChecked
-
-            // Check which radio button was clicked
-            when (view.getId()) {
-                radioButtonDriver.id ->
-                    if (checked) {
-                        radioButtonRider.isChecked = false
-                        userType = "Driver"
-                    }
-                radioButtonRider.id ->
-                    if (checked) {
-                        radioButtonDriver.isChecked = false
-                        userType = "Rider"
-                    }
-            }
-        }
-    }
+//    fun onRadioButtonClicked(view: View){
+//        if (view is RadioButton) {
+//            // Is the button now checked?
+//            val checked = view.isChecked
+//
+//            // Check which radio button was clicked
+//            when (view.getId()) {
+//                radioButtonDriver.id ->
+//                    if (checked) {
+//                        radioButtonRider.isChecked = false
+//                        userType = "Driver"
+//                    }
+//                radioButtonRider.id ->
+//                    if (checked) {
+//                        radioButtonDriver.isChecked = false
+//                        userType = "Rider"
+//                    }
+//            }
+//        }
+//    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         drawerLayout.closeDrawer(GravityCompat.START)

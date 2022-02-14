@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     if(it.isSuccessful){
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, HomePageActivity::class.java)
                         startActivity(intent)
                     } else{
                         Toast.makeText(this, "Error! " + it.exception?.message.toString() , Toast.LENGTH_SHORT).show()
@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         val currentUser = auth.currentUser
         if(currentUser != null){
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, HomePageActivity::class.java)
             intent.putExtra("userId", currentUser.uid.toString())
             startActivity(intent)
         }

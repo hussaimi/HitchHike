@@ -156,12 +156,12 @@ class AddTripActivity : AppCompatActivity() {
                 radioButtonDriver.id ->
                     if (checked) {
                         radioButtonRider.isChecked = false
-                        userType = "Driver"
+                        userType = "Rider"
                     }
                 radioButtonRider.id ->
                     if (checked) {
                         radioButtonDriver.isChecked = false
-                        userType = "Rider"
+                        userType = "Driver"
                     }
             }
         }
