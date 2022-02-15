@@ -94,10 +94,6 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
                     toLocation.error = "Required"
                     return@setOnClickListener
                 }
-                userType.isNullOrEmpty() -> {
-                    Toast.makeText(this, "Please select 'Looking For'", Toast.LENGTH_LONG).show()
-                    return@setOnClickListener
-                }
                 else -> {
                     getTripData()
                 }
@@ -107,9 +103,9 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         clearFilterBtn.setOnClickListener {
             fromLocation.text = null
             toLocation.text = null
-            radioButtonDriver.isChecked = false
-            radioButtonRider.isChecked = false
-            userType = null
+//            radioButtonDriver.isChecked = false
+//            radioButtonRider.isChecked = false
+//            userType = null
             tripArrayList.clear()
             tripIdArrayList.clear()
             getTripData()
