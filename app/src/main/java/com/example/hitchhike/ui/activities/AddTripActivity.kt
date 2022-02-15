@@ -105,13 +105,13 @@ class AddTripActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-        finish()
-    }
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        val intent = Intent(this, MainActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//        startActivity(intent)
+//        finish()
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
