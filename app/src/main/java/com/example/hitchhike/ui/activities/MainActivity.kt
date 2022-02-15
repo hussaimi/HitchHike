@@ -28,6 +28,10 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
+
+//Don't delete rides, just show those rides which dates are not passed.
+// SEarch for soft-deletes
+
 class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavigationItemSelectedListener {
 
     private val radioButtonDriver: RadioButton by lazy { findViewById(R.id.radioBtnDriver) }
