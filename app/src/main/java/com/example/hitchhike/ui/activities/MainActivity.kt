@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hitchhike.ui.adapters.MyAdapter
 import com.example.hitchhike.R
-import com.example.hitchhike.databinding.ContentMainBinding
 import com.example.hitchhike.model.ScheduleRequestInfo
 import com.example.hitchhike.model.TripsInfo
 import com.google.android.material.navigation.NavigationView
@@ -42,8 +41,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     private lateinit var dbReference: DatabaseReference
     private lateinit var scheduleDbReference: DatabaseReference
     private lateinit var tripRecyclerView: RecyclerView
-    private lateinit var tripArrayList: ArrayList<TripsInfo>
-    private lateinit var tripIdArrayList: ArrayList<String>
+    private lateinit var validTripArrayList: ArrayList<TripsInfo>
+    private lateinit var ValidTripIdArrayList: ArrayList<String>
     private lateinit var scheduleRequestArrayList: ArrayList<ScheduleRequestInfo>
     private lateinit var scheduleRequestKeyArrayList: ArrayList<String>
     private val drawerLayout: DrawerLayout by lazy { findViewById(R.id.drawerLayout) }
@@ -80,8 +79,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         tripRecyclerView.layoutManager = LinearLayoutManager(this)
         tripRecyclerView.setHasFixedSize(true)
 
-        tripArrayList = arrayListOf()
-        tripIdArrayList = arrayListOf()
+        validTripArrayList = arrayListOf()
+        ValidTripIdArrayList = arrayListOf()
         dbReference = FirebaseDatabase.getInstance().getReference("Trips")
 
         // populating dashboard with all the trips available in database
@@ -110,8 +109,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
 //            radioButtonDriver.isChecked = false
 //            radioButtonRider.isChecked = false
 //            userType = null
-            tripArrayList.clear()
-            tripIdArrayList.clear()
+            validTripArrayList.clear()
+            ValidTripIdArrayList.clear()
             getTripData()
         }
 
@@ -144,6 +143,11 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
                                 scheduleRequestArrayList.add(request)
                                 scheduleRequestKeyArrayList.add(scheduleSnapshot.key.toString())
                             }
+                            if(request.requesterId == FirebaseAuth.getInstance().uid.toString() && request.status == "decline" && request.status != "Complete"){
+                                scheduleRequestArrayList.add(request)
+                                scheduleRequestKeyArrayList.add(scheduleSnapshot.key.toString())
+                            }
+
 
                             // if request.status is changed to decline, then store request data to another list to show user the notification
                             // that the ride request has been declined.
@@ -165,6 +169,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         })
     }
 
+    //only fetch those rides whose date has not passed
     private fun getTripData() {
         /* while fetching data for all the trips, check if the dates for particular rides are still valid
            if not valid then call removeNode() function to remove that node from the trips table
@@ -175,31 +180,32 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         dbReference.addValueEventListener(object : ValueEventListener{
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
-                tripArrayList.clear()
+                validTripArrayList.clear()
                 if (snapshot.exists()){
                     for(tripSnapshot in snapshot.children){
                         val trip = tripSnapshot.getValue(TripsInfo::class.java)
-                        if(fromLocation.text.isEmpty()  && toLocation.text.isEmpty() ) { //&& userType.isNullOrEmpty()
-                            if (trip != null) {
-                                if(!(trip.userType.equals(userIs))){
-                                    Log.i("userType", "Match")
-                                    checkTripExpiration(trip, tripSnapshot.key.toString())
-                                    tripIdArrayList.add(tripSnapshot.key.toString())
-                                    tripArrayList.add(trip)
-                                }
-                            }
-                        } else if (trip != null) {
-                            if(!(trip.userType.equals(userIs))){
-                                if (trip.from.equals(fromLocation.text.toString()) && trip.to.equals(toLocation.text.toString())){ //&& trip.userType.equals(userType)
-                                    tripArrayList.clear()
-                                    tripIdArrayList.clear()
-                                    tripIdArrayList.add(tripSnapshot.key.toString())
-                                    tripArrayList.add(trip)
-                                }
+                        if (trip != null) {
+                            if(checkTripExpiration(trip, tripSnapshot.key.toString()) == "Valid"){
+                                if(fromLocation.text.isEmpty()  && toLocation.text.isEmpty() ) { //&& userType.isNullOrEmpty()
+                                    if (!(trip.userType.equals(userIs))) {
+                                        Log.i("userType", "Match")
+                                        ValidTripIdArrayList.add(tripSnapshot.key.toString())
+                                        validTripArrayList.add(trip)
+                                    }
+                                } else
+                                    if(!(trip.userType.equals(userIs))){
+                                        if (trip.from.equals(fromLocation.text.toString()) && trip.to.equals(toLocation.text.toString())){ //&& trip.userType.equals(userType)
+                                            validTripArrayList.clear()
+                                            ValidTripIdArrayList.clear()
+                                            ValidTripIdArrayList.add(tripSnapshot.key.toString())
+                                            validTripArrayList.add(trip)
+                                        }
+                                    }
+
                             }
                         }
                     }
-                    tripRecyclerView.adapter = MyAdapter(tripArrayList, this@MainActivity)
+                    tripRecyclerView.adapter = MyAdapter(validTripArrayList, this@MainActivity)
                 }
             }
 
@@ -223,36 +229,41 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
        }
      */
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun checkTripExpiration(trip: TripsInfo, key: String) {
+    private fun checkTripExpiration(trip: TripsInfo, key: String): String {
         val currentTime = LocalTime.now().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
         val formattedCurrentTime = LocalTime.parse(currentTime, DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
         val tripTime = trip.time?.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
         val formattedTripTime = LocalTime.parse(tripTime, DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
 
         val currentDate = LocalDate.now()
-        val tripDate = LocalDate.parse(trip.date, DateTimeFormatter.ofPattern("MM/dd/yyyy")) // yyyy-MM-dd
+        val tripDate = LocalDate.parse(trip.date.toString(), DateTimeFormatter.ofPattern("MM/dd/yyyy")) // yyyy-MM-dd
 
         if(tripDate.isBefore(currentDate)){
             Log.i("Ride", "Expired")
+            return "Expired"
         } else if(tripDate.isEqual(currentDate)){
             if (formattedTripTime.isBefore(formattedCurrentTime)) {
                 Log.i("Ride", "Expired")
+                return "Expired"
             } else {
                 Log.i("Ride", "Valid")
+                return "Expired"
             }
         } else if (tripDate.isAfter(currentDate)){
             Log.i("Ride", "Valid")
+            return "Valid"
         }
+        return "Valid"
     }
 
     override fun onItemClick(position: Int) {
         val intent = Intent(this, TripDetailActivity::class.java)
-        if(tripArrayList[position].userId == FirebaseAuth.getInstance().uid){
+        if(validTripArrayList[position].userId == FirebaseAuth.getInstance().uid){
             intent.putExtra("ownerOfTrip", "true")
         }
-        intent.putExtra("TripInfo", tripArrayList[position])
-        intent.putExtra("TripOwnerId", tripArrayList[position].userId)
-        intent.putExtra("TripId", tripIdArrayList[position])
+        intent.putExtra("TripInfo", validTripArrayList[position])
+        intent.putExtra("TripOwnerId", validTripArrayList[position].userId)
+        intent.putExtra("TripId", ValidTripIdArrayList[position])
         startActivity(intent)
     }
 

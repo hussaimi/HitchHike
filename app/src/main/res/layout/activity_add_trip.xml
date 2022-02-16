@@ -132,6 +132,7 @@
                 android:id="@+id/textViewTime"
                 android:hint="@string/hint_pick_up_time"
                 android:textSize="17sp"
+                android:textColor="@color/black"
                 android:ems="10" />
         </LinearLayout>
 

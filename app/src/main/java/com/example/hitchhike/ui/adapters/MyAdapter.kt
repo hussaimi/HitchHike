@@ -20,8 +20,8 @@ class MyAdapter(private val tripList: ArrayList<TripsInfo>, private val listener
         val currentItem = tripList[position]
         holder.from.text = currentItem.from
         holder.to.text = currentItem.to
-        holder.data.text = currentItem.date
-        holder.time.text = currentItem.time
+        holder.data.text = currentItem.date.toString()
+        holder.time.text = currentItem.time.toString()
     }
 
     override fun getItemCount(): Int {

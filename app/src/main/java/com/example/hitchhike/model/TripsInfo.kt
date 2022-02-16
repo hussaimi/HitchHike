@@ -1,6 +1,10 @@
 package com.example.hitchhike.model
 
 import java.io.Serializable
+import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalTime
+
 
 data class TripsInfo(
     var from: String? = null,

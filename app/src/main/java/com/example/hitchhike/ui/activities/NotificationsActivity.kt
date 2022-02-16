@@ -54,8 +54,8 @@ class NotificationsActivity : AppCompatActivity() {
                 intent.putExtra("tripId", tripId)
                 intent.putExtra("requesterId", requesterId)
                 intent.putExtra("requestKey", scheduleRequestKeyArrayList[position])
+                intent.putExtra("status", scheduleRequestArrayList[position].status)
                 startActivity(intent)
-
             }
         } else {
             arrayList.add(ScheduleRequestInfo(null, null, null, null))

@@ -2,7 +2,6 @@ package com.example.hitchhike.ui.activities
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.sql.Timestamp
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -118,10 +119,12 @@ class AddTripActivity : AppCompatActivity() {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDateInView() {
         val myFormat = "MM/dd/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         textViewDate.text = sdf.format(cal.time)
+        Toast.makeText(this, LocalDate.parse(textViewDate.text, DateTimeFormatter.ofPattern("MM/dd/yyyy")).toString(), Toast.LENGTH_SHORT).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -131,12 +134,13 @@ class AddTripActivity : AppCompatActivity() {
         return time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun writeNewTrip(){
         val fLocation = fromLocation.text.toString()
         val tLocation = toLocation.text.toString()
         val desc = description.text.toString()
-        val date = textViewDate.text.toString()
-        val time = textViewTime.text.toString()
+        val date = textViewDate.text.toString() //LocalDate.parse(textViewDate.text, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+        val time = textViewTime.text.toString() //LocalTime.parse(textViewTime.text, DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
         val trip = TripsInfo(fLocation, tLocation, desc, date, time, noOfPeople, userType, FirebaseAuth.getInstance().uid.toString())
 
         dbReference.child("Trips")

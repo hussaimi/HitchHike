@@ -18,7 +18,7 @@
     <string name="userType">User Type:</string>
     <string name="save">Save</string>
     <string name="hint_pick_up_date">dd/mm/yyyy</string>
-    <string name="hint_pick_up_time">hh:mm</string>
+    <string name="hint_pick_up_time">hh:mm:ss AM/PM</string>
     <string name="addTrip">Add Trip</string>
     <string name="rider">Rider</string>
     <string name="submit">Submit</string>

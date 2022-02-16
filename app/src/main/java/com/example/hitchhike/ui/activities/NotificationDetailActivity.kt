@@ -3,6 +3,7 @@ package com.example.hitchhike.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.example.hitchhike.databinding.ActivityNotificationDetailBinding
 import com.example.hitchhike.model.TripsInfo
 import com.example.hitchhike.model.userInfo
@@ -26,6 +27,7 @@ class NotificationDetailActivity : AppCompatActivity() {
         var tripId = intent.getStringExtra("tripId")
         var requesterId = intent.getStringExtra("requesterId")
         scheduleRequestKey = intent.getStringExtra("requestKey").toString()
+        val status = intent.getStringExtra("status")
 
         dbReference = Firebase.database.reference
 
@@ -57,6 +59,12 @@ class NotificationDetailActivity : AppCompatActivity() {
             }.addOnFailureListener {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
+        }
+
+        if(status == "decline"){
+            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status").setValue("Complete")
+            binding.btnAccept.isVisible = false
+            binding.btnDecline.isVisible = false
         }
 
         binding.btnAccept.setOnClickListener {

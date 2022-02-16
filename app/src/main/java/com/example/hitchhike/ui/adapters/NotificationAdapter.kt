@@ -28,14 +28,18 @@ class NotificationAdapter(private val context: Activity, private val arrayList: 
         val notificationMessage: TextView = view.findViewById(R.id.textViewNotification)
 
         if(arrayList[position].requesterId == null){
-            notificationMessage.text = "No Ride Request at the moment"
+            notificationMessage.text = "No New Notification at the moment"
         } else {
             val requesterId = arrayList[position].requesterId
             if (requesterId != null) {
                 dbReference.child("Users").child(requesterId).get().addOnSuccessListener {
                     val user = it.getValue(userInfo::class.java)
                     if (user != null) {
-                        notificationMessage.text = "Ride Request From " + user.fullName.toString()
+                        if(arrayList[position].status == "pending"){
+                            notificationMessage.text = "Ride Request From " + user.fullName.toString()
+                        } else if (arrayList[position].status == "decline"){
+                            notificationMessage.text = "Ride Request Declined From " + user.fullName.toString()
+                        }
                     }
                 }.addOnFailureListener{
 //                    Log.e("firebase", "Error getting data", it)
