@@ -13,6 +13,6 @@ data class TripsInfo(
     var date: String? = null,
     var time: String? = null,
     var noOfPeople: String? = null,
-    var userType: String? = null,
+    var lookingFor: String? = null,
     var userId: String? = null) : Serializable
 //add userId column as well to keep record of which user posted a ride.

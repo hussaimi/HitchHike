@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -36,7 +35,7 @@ class AddTripActivity : AppCompatActivity() {
     private val radioButtonDriver: RadioButton by lazy { findViewById(R.id.radioBtnDriver) }
     private val radioButtonRider: RadioButton by lazy { findViewById(R.id.radioBtnRider) }
     private var noOfPeople: String? = null
-    private var userType: String? = null
+    private var lookingFor: String? = null
     private val saveButton: Button by lazy { findViewById(R.id.btnSubmit) }
     private lateinit var dbReference: DatabaseReference
 
@@ -141,7 +140,7 @@ class AddTripActivity : AppCompatActivity() {
         val desc = description.text.toString()
         val date = textViewDate.text.toString() //LocalDate.parse(textViewDate.text, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
         val time = textViewTime.text.toString() //LocalTime.parse(textViewTime.text, DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
-        val trip = TripsInfo(fLocation, tLocation, desc, date, time, noOfPeople, userType, FirebaseAuth.getInstance().uid.toString())
+        val trip = TripsInfo(fLocation, tLocation, desc, date, time, noOfPeople, lookingFor, FirebaseAuth.getInstance().uid.toString())
 
         dbReference.child("Trips")
             .push()
@@ -160,12 +159,12 @@ class AddTripActivity : AppCompatActivity() {
                 radioButtonDriver.id ->
                     if (checked) {
                         radioButtonRider.isChecked = false
-                        userType = "Rider"
+                        lookingFor = "Driver"
                     }
                 radioButtonRider.id ->
                     if (checked) {
                         radioButtonDriver.isChecked = false
-                        userType = "Driver"
+                        lookingFor = "Rider"
                     }
             }
         }

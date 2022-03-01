@@ -46,10 +46,10 @@ class TripDetailActivity : AppCompatActivity() {
             binding.txtViewDateDetail.text = trip.date
             binding.txtViewTimeDetail.text = trip.time
             binding.txtViewNoOfPeopleDetail.text = trip.noOfPeople
-            if(trip.userType.equals("Rider")){
-                binding.txtViewLookinForDetail.text = "Driver"
-            } else if( trip.userType.equals("Driver")){
+            if(trip.lookingFor.equals("Rider")){
                 binding.txtViewLookinForDetail.text = "Rider"
+            } else if( trip.lookingFor.equals("Driver")){
+                binding.txtViewLookinForDetail.text = "Driver"
             }
 
         }
