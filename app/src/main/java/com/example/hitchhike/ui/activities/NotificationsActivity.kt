@@ -34,6 +34,7 @@ class NotificationsActivity : AppCompatActivity() {
         binding = ActivityNotificationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = "Notifications"
 
         arrayList = ArrayList()
         scheduleRequestArrayList = ArrayList()

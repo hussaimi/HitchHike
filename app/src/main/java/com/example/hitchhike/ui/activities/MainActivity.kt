@@ -14,7 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hitchhike.ui.adapters.MyAdapter
+import com.example.hitchhike.ui.adapters.DashboardAdapter
 import com.example.hitchhike.R
 import com.example.hitchhike.model.ScheduleRequestInfo
 import com.example.hitchhike.model.TripsInfo
@@ -32,7 +32,7 @@ import java.time.format.FormatStyle
 // Don't delete rides, just show those rides which dates are not passed.
 // Search for soft-deletes
 
-class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), DashboardAdapter.OnItemClickListener, OnNavigationItemSelectedListener {
 
     private val fromLocation: EditText by lazy { findViewById(R.id.editTextFrom) }
     private val toLocation: EditText by lazy { findViewById(R.id.editTextTo) }
@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
     private lateinit var validTripIdArrayList: ArrayList<String>
     private lateinit var scheduleRequestArrayList: ArrayList<ScheduleRequestInfo>
     private lateinit var scheduleRequestKeyArrayList: ArrayList<String>
+    private lateinit var myRidesArrayList: ArrayList<ScheduleRequestInfo>
+    private lateinit var myRidesKeyArrayList: ArrayList<String>
     private val drawerLayout: DrawerLayout by lazy { findViewById(R.id.drawerLayout) }
     private lateinit var userIs: String
 
@@ -53,16 +55,20 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        title = "Dashboard"
 
         //retrieve userType (Driver/Rider) from homePageActivity
         if(intent.hasExtra("userIs")){
             userIs = intent.getStringExtra("userIs").toString()
         }
 
-        //initializing scheduleRequestArrayList variable
+        //initializing ArrayList variable
         scheduleRequestArrayList = arrayListOf()
-        scheduleRequestArrayList.clear()
         scheduleRequestKeyArrayList = arrayListOf()
+        validTripArrayList = arrayListOf()
+        validTripIdArrayList = arrayListOf()
+        myRidesArrayList = arrayListOf()
+        myRidesKeyArrayList = arrayListOf()
 
         val navView = findViewById<NavigationView>(R.id.navView)
         navView.setNavigationItemSelectedListener(this)
@@ -77,14 +83,12 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         tripRecyclerView.layoutManager = LinearLayoutManager(this)
         tripRecyclerView.setHasFixedSize(true)
 
-        validTripArrayList = arrayListOf()
-        validTripIdArrayList = arrayListOf()
+
         dbReference = FirebaseDatabase.getInstance().getReference("Trips")
         scheduleDbReference = FirebaseDatabase.getInstance().getReference("ScheduleRequests")
         // populating dashboard with all the trips available in database
         getTripData(object : MyCallBack {
             override fun onCallback(validTrip: ArrayList<String>){
-                Toast.makeText(this@MainActivity, validTrip[validTrip.size-1].toString(), Toast.LENGTH_SHORT).show()
                 getRequestData(validTrip)
             }
         })
@@ -103,7 +107,6 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
                 else -> {
                     getTripData(object : MyCallBack {
                         override fun onCallback(validTrip: ArrayList<String>) {
-                            Toast.makeText(this@MainActivity, validTrip.size.toString(), Toast.LENGTH_SHORT).show()
                         }
                     })
                 }
@@ -114,14 +117,10 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         clearFilterBtn.setOnClickListener {
             fromLocation.text = null
             toLocation.text = null
-//            radioButtonDriver.isChecked = false
-//            radioButtonRider.isChecked = false
-//            userType = null
             validTripArrayList.clear()
             validTripIdArrayList.clear()
             getTripData(object : MyCallBack {
                 override fun onCallback(validTrip: ArrayList<String>) {
-                    Toast.makeText(this@MainActivity, validTrip.size.toString(), Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -139,10 +138,12 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         super.onStart()
         scheduleRequestArrayList.clear()
     }
+
     /*  get MyRidesData()
     *       1. Read data from schedule request table
     *       2. for all those data where status changed to accepted, see if the requesterId, or tripOwnerId is equal to uid
     *       3. If yes then send requesterId, uid, and tripId to the myRides page */
+
     private fun getRequestData(validTrip: ArrayList<String>) {
         validTrip.forEach {
             val query = scheduleDbReference.orderByChild("rideId").equalTo(it)
@@ -163,11 +164,11 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
                                 scheduleRequestArrayList.add(request)
                                 scheduleRequestKeyArrayList.add(childSnapshot.key.toString())
                             }
-
+                            if (request.status == "accept") {
+                                myRidesArrayList.add((request))
+                                myRidesKeyArrayList.add(childSnapshot.key.toString())
+                            }
                         }
-                            // if request.status is changed to decline, then store request data to another list to show user the notification
-                            // that the ride request has been declined.
-
                     }
                     if(scheduleRequestArrayList.size != 0){
                         Toast.makeText(this@MainActivity, "You have a notification.", Toast.LENGTH_LONG).show()
@@ -178,14 +179,8 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
 
     }
 
-    //only fetch those rides whose date has not passed
+    //only fetch those rides which are not expired yet.
     private fun getTripData(myCallback : MyCallBack) {
-        /* while fetching data for all the trips, check if the dates for particular rides are still valid
-           if not valid then call removeNode() function to remove that node from the trips table
-           Also store the Id of all the remove nodes inside a list
-           Use those keys from the removed trips list, and fetch each node from scheduleRequest table containing that tripId
-           change the status of those requests to "removed"
-           */
         dbReference.addValueEventListener(object : ValueEventListener{
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -216,7 +211,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
                         }
                     }
                     myCallback.onCallback(validTripIdArrayList)
-                    tripRecyclerView.adapter = MyAdapter(validTripArrayList, this@MainActivity)
+                    tripRecyclerView.adapter = DashboardAdapter(validTripArrayList, this@MainActivity)
                 }
             }
 
@@ -286,6 +281,7 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         drawerLayout.closeDrawer(GravityCompat.START)
         when(item.itemId){
             R.id.actionProfile -> startActivity(Intent(this, MyProfileActivity::class.java))
+            R.id.actionMyRides -> openMyRidesPage()
             R.id.actionNotification -> goToNotificationPage()
             R.id.actionLogout -> logout()
         }
@@ -297,6 +293,15 @@ class MainActivity : AppCompatActivity(), MyAdapter.OnItemClickListener, OnNavig
         if(scheduleRequestArrayList.isNotEmpty()){
             intent.putExtra("requests", scheduleRequestArrayList)
             intent.putExtra("requestKeys", scheduleRequestKeyArrayList)
+        }
+        startActivity(intent)
+    }
+
+    private fun openMyRidesPage(){
+        val intent = Intent(this, MyRidesActivity::class.java)
+        if(myRidesArrayList.isNotEmpty()){
+            intent.putExtra("myRides", myRidesArrayList)
+            intent.putExtra("myRideKeys", myRidesKeyArrayList)
         }
         startActivity(intent)
     }
