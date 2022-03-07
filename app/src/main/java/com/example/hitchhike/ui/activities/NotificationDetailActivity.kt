@@ -22,6 +22,7 @@ class NotificationDetailActivity : AppCompatActivity() {
         binding = ActivityNotificationDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = "Notification Detail"
 
 
         var tripId = intent.getStringExtra("tripId")

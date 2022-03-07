@@ -24,6 +24,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        title = "Sign up"
 
         dbReference = Firebase.database.reference
 

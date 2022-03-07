@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hitchhike.R
 import com.example.hitchhike.model.TripsInfo
 
-class MyAdapter(private val tripList: ArrayList<TripsInfo>, private val listener: OnItemClickListener) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class DashboardAdapter(private val tripList: ArrayList<TripsInfo>, private val listener: OnItemClickListener) : RecyclerView.Adapter<DashboardAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.trip_item, parent, false)
