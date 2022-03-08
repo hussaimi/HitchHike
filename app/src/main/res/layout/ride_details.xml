@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/frame_border"
+        android:paddingLeft="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/txtViewFrom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/from"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtViewFromDetail"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtViewFromDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PlaceHolder Text"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/txtViewFrom"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtViewTo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/to"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtViewFromDetail"
+            app:layout_constraintTop_toBottomOf="@id/txtViewFrom" />
+
+        <TextView
+            android:id="@+id/txtViewToDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:text="PlaceHolder Text"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/txtViewTo"
+            app:layout_constraintTop_toBottomOf="@id/txtViewFromDetail" />
+
+        <TextView
+            android:id="@+id/txtViewDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtViewDescDetail"
+            app:layout_constraintTop_toBottomOf="@id/txtViewTo" />
+
+        <TextView
+            android:id="@+id/txtViewDescDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="PlaceHolder Text"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/txtViewDesc"
+            app:layout_constraintTop_toBottomOf="@id/txtViewToDetail" />
+
+        <TextView
+            android:id="@+id/txtViewTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/time"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtViewTimeDetail"
+            app:layout_constraintTop_toBottomOf="@id/txtViewDesc" />
+
+        <TextView
+            android:id="@+id/txtViewTimeDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="PlaceHolder Text"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/txtViewTime"
+            app:layout_constraintTop_toBottomOf="@id/txtViewDescDetail" />
+
+        <TextView
+            android:id="@+id/txtViewDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/date"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtViewDateDetail"
+            app:layout_constraintTop_toBottomOf="@id/txtViewTime" />
+
+        <TextView
+            android:id="@+id/txtViewDateDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="PlaceHolder Text"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/txtViewTime"
+            app:layout_constraintTop_toBottomOf="@id/txtViewTimeDetail" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/white"
+        android:text="Ride Detail"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+</FrameLayout>

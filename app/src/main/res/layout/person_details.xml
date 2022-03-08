@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/frame_border"
+        android:paddingLeft="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:id="@+id/txtViewName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtViewNameDetail"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtViewNameDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PlaceHolder Text"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/txtViewName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtViewPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/phone_number"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtViewNameDetail"
+            app:layout_constraintTop_toBottomOf="@id/txtViewName" />
+
+        <TextView
+            android:id="@+id/txtViewPhoneDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:text="PlaceHolder Text"
+            android:textColor="@color/black"
+
+            app:layout_constraintLeft_toRightOf="@id/txtViewPhone"
+            app:layout_constraintTop_toBottomOf="@id/txtViewNameDetail" />
+
+        <TextView
+            android:id="@+id/txtViewEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/email"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtViewEmailDetail"
+            app:layout_constraintTop_toBottomOf="@id/txtViewPhone" />
+
+        <TextView
+            android:id="@+id/txtViewEmailDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="PlaceHolder Text"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/txtViewEmail"
+            app:layout_constraintTop_toBottomOf="@id/txtViewPhoneDetail" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/white"
+        android:text="Person Details"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+</FrameLayout>

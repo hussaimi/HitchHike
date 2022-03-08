@@ -46,4 +46,8 @@
     <string name="sign_in">Sign In</string>
     <string name="enter_username">Enter Username</string>
     <string name="notifications">Notifications</string>
+    <string name="travel_with">Person:</string>
+    <string name="name">Name:</string>
+    <string name="phone_number">Phone Number:</string>
+    <string name="email">Email:</string>
 </resources>
