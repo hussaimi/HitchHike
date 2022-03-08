@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/layout/activity_main_nav.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_my_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_my_rides.xml" value="0.2682291666666667" />
+        <entry key="app/src/main/res/layout/activity_my_rides_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_notification_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_notifications.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.3640625" />
@@ -25,6 +26,9 @@
         <entry key="app/src/main/res/layout/list_items.xml" value="0.33" />
         <entry key="app/src/main/res/layout/main_nav_header.xml" value="0.3640625" />
         <entry key="app/src/main/res/layout/my_button_bg.xml" value="0.3640625" />
+        <entry key="app/src/main/res/layout/my_rides_trips.xml" value="0.2838541666666667" />
+        <entry key="app/src/main/res/layout/person_details.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/ride_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/trip_item.xml" value="0.27572214251447963" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/nav_main.xml" value="0.33" />

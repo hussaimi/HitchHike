@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.activities.MyRidesDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.MyRidesActivity"
             android:exported="false" />
         <activity
