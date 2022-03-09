@@ -8,24 +8,28 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hitchhike.R
 import com.example.hitchhike.model.TripsInfo
+import com.example.hitchhike.model.userInfo
+import com.example.hitchhike.ui.activities.MyRidesActivity
 
-class DashboardAdapter(
+class MyRidesAdapter(
     private val tripList: ArrayList<TripsInfo>,
+    private val user: ArrayList<userInfo>,
     private val listener: OnItemClickListener
-) : RecyclerView.Adapter<DashboardAdapter.MyViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+) : RecyclerView.Adapter<MyRidesAdapter.MyViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRidesAdapter.MyViewHolder {
         val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.trip_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.my_rides_trips, parent, false)
         return MyViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = tripList[position]
-        holder.from.text = currentItem.from
-        holder.to.text = currentItem.to
-        holder.data.text = currentItem.date.toString()
-        holder.time.text = currentItem.time.toString()
+        val currentTripItem = tripList[position]
+        val currentUserItem = user[position]
+        holder.from.text = currentTripItem.from
+        holder.to.text = currentTripItem.to
+        holder.data.text = currentTripItem.date.toString()
+        holder.time.text = currentTripItem.time.toString()
+        holder.travelingWith.text = currentUserItem.fullName.toString()
     }
 
     override fun getItemCount(): Int {
@@ -38,6 +42,7 @@ class DashboardAdapter(
         val to: TextView = itemView.findViewById(R.id.textViewCardTo)
         val data: TextView = itemView.findViewById(R.id.textViewCardDate)
         val time: TextView = itemView.findViewById(R.id.textViewCardTime)
+        val travelingWith: TextView = itemView.findViewById(R.id.textViewCardTravelWith)
         val detailButton: Button = itemView.findViewById(R.id.btnCardDetails)
 
         init {
