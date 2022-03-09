@@ -12,19 +12,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/frame_border"
-        android:paddingLeft="5dp"
+        android:paddingLeft="13dp"
         android:paddingTop="15dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="13dp">
 
         <TextView
             android:id="@+id/txtViewFrom"
-            android:layout_width="0dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="@string/from"
             android:textColor="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/txtViewFromDetail"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/txtViewTo"/>
 
         <TextView
             android:id="@+id/txtViewFromDetail"
@@ -33,39 +34,45 @@
             android:text="PlaceHolder Text"
             android:textColor="@color/black"
             app:layout_constraintLeft_toRightOf="@id/txtViewFrom"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/txtViewToDetail"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
             android:id="@+id/txtViewTo"
-            android:layout_width="0dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/to"
             android:textColor="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/txtViewFromDetail"
-            app:layout_constraintTop_toBottomOf="@id/txtViewFrom" />
+            app:layout_constraintTop_toBottomOf="@id/txtViewFrom"
+            app:layout_constraintBottom_toTopOf="@id/txtViewDesc"/>
 
         <TextView
             android:id="@+id/txtViewToDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="PlaceHolder Text"
             android:textColor="@color/black"
             app:layout_constraintLeft_toRightOf="@id/txtViewTo"
-            app:layout_constraintTop_toBottomOf="@id/txtViewFromDetail" />
+            app:layout_constraintTop_toBottomOf="@id/txtViewFromDetail"
+            app:layout_constraintBottom_toTopOf="@id/txtViewDescDetail"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
             android:id="@+id/txtViewDesc"
-            android:layout_width="0dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/description"
             android:textColor="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/txtViewDescDetail"
-            app:layout_constraintTop_toBottomOf="@id/txtViewTo" />
+            app:layout_constraintTop_toBottomOf="@id/txtViewTo"
+            app:layout_constraintBottom_toTopOf="@id/txtViewTime"/>
 
         <TextView
             android:id="@+id/txtViewDescDetail"
@@ -75,18 +82,21 @@
             android:text="PlaceHolder Text"
             android:textColor="@color/black"
             app:layout_constraintLeft_toRightOf="@id/txtViewDesc"
-            app:layout_constraintTop_toBottomOf="@id/txtViewToDetail" />
+            app:layout_constraintTop_toBottomOf="@id/txtViewToDetail"
+            app:layout_constraintBottom_toTopOf="@id/txtViewTimeDetail"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
             android:id="@+id/txtViewTime"
-            android:layout_width="0dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/time"
             android:textColor="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/txtViewTimeDetail"
-            app:layout_constraintTop_toBottomOf="@id/txtViewDesc" />
+            app:layout_constraintTop_toBottomOf="@id/txtViewDesc"
+            app:layout_constraintBottom_toTopOf="@id/txtViewDate"/>
 
         <TextView
             android:id="@+id/txtViewTimeDetail"
@@ -96,11 +106,13 @@
             android:text="PlaceHolder Text"
             android:textColor="@color/black"
             app:layout_constraintLeft_toRightOf="@id/txtViewTime"
-            app:layout_constraintTop_toBottomOf="@id/txtViewDescDetail" />
+            app:layout_constraintTop_toBottomOf="@id/txtViewDescDetail"
+            app:layout_constraintBottom_toTopOf="@id/txtViewDateDetail"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
             android:id="@+id/txtViewDate"
-            android:layout_width="0dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/date"
@@ -119,7 +131,8 @@
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/txtViewTime"
-            app:layout_constraintTop_toBottomOf="@id/txtViewTimeDetail" />
+            app:layout_constraintTop_toBottomOf="@id/txtViewTimeDetail"
+            app:layout_constraintRight_toRightOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
