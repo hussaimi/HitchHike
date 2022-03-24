@@ -2,8 +2,6 @@ package com.example.hitchhike.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import com.example.hitchhike.R
 import com.example.hitchhike.databinding.ActivityMyRidesDetailBinding
 import com.example.hitchhike.model.TripsInfo
 import com.example.hitchhike.model.userInfo
@@ -18,7 +16,6 @@ class MyRidesDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Ride Details"
 
-        //binding.personDetail.txtViewEmail.text = "hello"
         if(intent.hasExtra("TripInfo")){
             val trip = intent.getSerializableExtra("TripInfo") as? TripsInfo
             val user = intent.getSerializableExtra("UserInfo") as? userInfo
