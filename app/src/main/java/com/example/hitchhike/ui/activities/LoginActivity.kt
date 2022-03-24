@@ -22,17 +22,17 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        binding.loginbtn.setOnClickListener{
+        binding.loginbtn.setOnClickListener {
 
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
 
-            if(email.isEmpty()){
+            if (email.isEmpty()) {
                 binding.editTextEmail.error = "Username Required"
                 return@setOnClickListener
 
             }
-            if (password.isEmpty()){
+            if (password.isEmpty()) {
                 binding.editTextPassword.error = "Password Required"
                 return@setOnClickListener
 
@@ -40,11 +40,15 @@ class LoginActivity : AppCompatActivity() {
 
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
-                    if(it.isSuccessful){
+                    if (it.isSuccessful) {
                         val intent = Intent(this, HomePageActivity::class.java)
                         startActivity(intent)
-                    } else{
-                        Toast.makeText(this, "Error! " + it.exception?.message.toString() , Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Error! " + it.exception?.message.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
         }
@@ -53,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             val intent = Intent(this, HomePageActivity::class.java)
             intent.putExtra("userId", currentUser.uid.toString())
             startActivity(intent)

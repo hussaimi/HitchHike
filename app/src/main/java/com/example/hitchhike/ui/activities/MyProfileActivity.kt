@@ -70,22 +70,41 @@ class MyProfileActivity : AppCompatActivity() {
             //updating user email for login credentials
             val currentUser = FirebaseAuth.getInstance().currentUser
             currentUser!!.updateEmail(email)
-                .addOnSuccessListener { Toast.makeText(this@MyProfileActivity, "Login Email Updated", Toast.LENGTH_LONG).show() }
-                .addOnFailureListener { Toast.makeText(this@MyProfileActivity, it.message.toString(), Toast.LENGTH_SHORT).show() }
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        this@MyProfileActivity,
+                        "Login Email Updated",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(
+                        this@MyProfileActivity,
+                        it.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
             //extracting data to Firebase
             dbReference.child("Users")
                 .child(uid)
                 .setValue(user)
-                .addOnSuccessListener { Toast.makeText(this@MyProfileActivity, "User Information Updated", Toast.LENGTH_LONG).show() }
-                .addOnFailureListener { Toast.makeText(this@MyProfileActivity, it.message.toString(), Toast.LENGTH_SHORT).show() }
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        this@MyProfileActivity,
+                        "User Information Updated",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(
+                        this@MyProfileActivity,
+                        it.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
             updateProfile(uid)
-
-//            dbReference.child("Users").child(uid).child("Full Name").setValue(fullName)
-//            dbReference.child("Users").child(uid).child("Email").setValue(email)
-//            dbReference.child("Users").child(uid).child("Phone Number").setValue(phone)
-
             //reverting to before Edit Profile button is clicked; fields are not editable and Save button is invisible
             binding.editTextMyProfileFullName.isEnabled = false
             binding.editTextMyProfileEmail.isEnabled = false
@@ -96,7 +115,7 @@ class MyProfileActivity : AppCompatActivity() {
 
     }
 
-    fun updateProfile(uid: String){
+    fun updateProfile(uid: String) {
         if (uid != null) {
             dbReference.child("Users").child(uid).get().addOnSuccessListener {
                 var user = it.getValue(userInfo::class.java)!!

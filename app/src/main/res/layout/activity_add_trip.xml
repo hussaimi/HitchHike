@@ -9,17 +9,17 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_margin="10dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="10dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -41,7 +41,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -63,7 +63,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -75,19 +75,19 @@
 
             <EditText
                 android:id="@+id/editTextDescription"
-                android:inputType="textMultiLine"
-                android:lines="3"
-                android:gravity="top|start"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.68"
-                android:ems="10" />
+                android:ems="10"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:lines="3" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -98,22 +98,22 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/textViewDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.68"
+                android:ems="10"
+                android:hint="@string/hint_pick_up_date"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:id="@+id/textViewDate"
-                android:hint="@string/hint_pick_up_date"
-                android:textSize="17sp"
                 android:textColor="@color/black"
-                android:ems="10" />
+                android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -124,16 +124,16 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/textViewTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.68"
+                android:ems="10"
+                android:hint="@string/hint_pick_up_time"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:id="@+id/textViewTime"
-                android:hint="@string/hint_pick_up_time"
-                android:textSize="17sp"
                 android:textColor="@color/black"
-                android:ems="10" />
+                android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -152,12 +152,12 @@
                 android:textSize="17sp" />
 
             <Spinner
+                android:id="@+id/spinnerNoOfPeople"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:textAlignment="viewEnd"
-                android:id="@+id/spinnerNoOfPeople"
-                android:ems="10" />
+                android:ems="10"
+                android:textAlignment="viewEnd" />
         </LinearLayout>
 
         <LinearLayout
@@ -176,13 +176,13 @@
                 android:textSize="17sp" />
 
             <RadioButton
+                android:id="@+id/radioBtnDriver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.34"
-                android:text="Driver"
-                android:id="@+id/radioBtnDriver"
+                android:ems="10"
                 android:onClick="onRadioButtonClicked"
-                android:ems="10" />
+                android:text="Driver" />
 
             <RadioButton
                 android:id="@+id/radioBtnRider"
@@ -199,7 +199,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <View
                 android:layout_width="0dp"
@@ -210,7 +210,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnSubmit"

@@ -32,7 +32,7 @@ class NotificationDetailActivity : AppCompatActivity() {
 
         dbReference = Firebase.database.reference
 
-        if (scheduleRequestKey != null){
+        if (scheduleRequestKey != null) {
             Toast.makeText(this, scheduleRequestKey, Toast.LENGTH_SHORT).show()
         }
 
@@ -62,39 +62,27 @@ class NotificationDetailActivity : AppCompatActivity() {
             }
         }
 
-        if(status == "decline"){
-            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status").setValue("Complete")
+        if (status == "decline") {
+            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status")
+                .setValue("Complete")
             binding.btnAccept.isVisible = false
             binding.btnDecline.isVisible = false
         }
 
         binding.btnAccept.setOnClickListener {
-            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status").setValue("accept")
+            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status")
+                .setValue("accept")
         }
 
         binding.btnDecline.setOnClickListener {
-            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status").setValue("decline")
+            dbReference.child("ScheduleRequests").child(scheduleRequestKey).child("status")
+                .setValue("decline")
         }
 
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 }
-
-//select * from scheduleRequest where rideId = ________
-//dbReference = FirebaseDatabase.getInstance().getReference("ScheduleRequests")
-//val query = dbReference.orderByChild("rideId").equalTo("-MttG_j0SaRh-0wK5Cm1")
-//query.addListenerForSingleValueEvent(object: ValueEventListener {
-//    override fun onCancelled(dataSnapshot: DatabaseError) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//    }
-//
-//    override fun onDataChange(dataSnapshot: DataSnapshot) {
-//        dataSnapshot.children.forEach { childSnapshot->
-//            Toast.makeText(this@NotificationDetailActivity, childSnapshot.key, Toast.LENGTH_SHORT).show()
-//            //val textValue = childSnapshot.child("text").getValue(String::class.java)
-//        }
-//    }
-//})

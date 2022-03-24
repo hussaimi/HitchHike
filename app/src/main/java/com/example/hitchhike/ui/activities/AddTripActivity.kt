@@ -25,7 +25,6 @@ import java.time.format.FormatStyle
 
 class AddTripActivity : AppCompatActivity() {
 
-
     val cal: Calendar by lazy { Calendar.getInstance() }
     private val fromLocation: EditText by lazy { findViewById(R.id.editTextFrom) }
     private val toLocation: EditText by lazy { findViewById(R.id.editTextTo) }
@@ -46,8 +45,6 @@ class AddTripActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Add Trip"
 
-        Toast.makeText(this, FirebaseAuth.getInstance().uid.toString(), Toast.LENGTH_SHORT).show()
-
         val mTimePicker: TimePickerDialog
         val hour = cal.get(Calendar.HOUR_OF_DAY)
         val minute = cal.get(Calendar.MINUTE)
@@ -55,15 +52,20 @@ class AddTripActivity : AppCompatActivity() {
 
         val numberArray = resources.getStringArray(R.array.numberOfPeopleArray)
         if (spinner != null) {
-            val adapter = ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, numberArray)
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item, numberArray
+            )
             spinner.adapter = adapter
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>,
-                                            view: View, position: Int, id: Long) {
-                    noOfPeople =  numberArray[position]
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    noOfPeople = numberArray[position]
                 }
+
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
                 }
@@ -90,7 +92,11 @@ class AddTripActivity : AppCompatActivity() {
         }
 
         mTimePicker = TimePickerDialog(this,
-            { _, hourOfDay, minute -> textViewTime.text = updateTime(hourOfDay, minute) }, hour, minute, false)
+            { _, hourOfDay, minute -> textViewTime.text = updateTime(hourOfDay, minute) },
+            hour,
+            minute,
+            false
+        )
 
         textViewTime.setOnClickListener {
             mTimePicker.show()
@@ -105,14 +111,6 @@ class AddTripActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//        val intent = Intent(this, MainActivity::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//        startActivity(intent)
-//        finish()
-//    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -123,7 +121,12 @@ class AddTripActivity : AppCompatActivity() {
         val myFormat = "MM/dd/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         textViewDate.text = sdf.format(cal.time)
-        Toast.makeText(this, LocalDate.parse(textViewDate.text, DateTimeFormatter.ofPattern("MM/dd/yyyy")).toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            LocalDate.parse(textViewDate.text, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+                .toString(),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -134,22 +137,45 @@ class AddTripActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun writeNewTrip(){
+    private fun writeNewTrip() {
         val fLocation = fromLocation.text.toString()
         val tLocation = toLocation.text.toString()
         val desc = description.text.toString()
-        val date = textViewDate.text.toString() //LocalDate.parse(textViewDate.text, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
-        val time = textViewTime.text.toString() //LocalTime.parse(textViewTime.text, DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
-        val trip = TripsInfo(fLocation, tLocation, desc, date, time, noOfPeople, lookingFor, FirebaseAuth.getInstance().uid.toString())
+        val date =
+            textViewDate.text.toString()
+        val time =
+            textViewTime.text.toString()
+        val trip = TripsInfo(
+            fLocation,
+            tLocation,
+            desc,
+            date,
+            time,
+            noOfPeople,
+            lookingFor,
+            FirebaseAuth.getInstance().uid.toString()
+        )
 
         dbReference.child("Trips")
             .push()
             .setValue(trip)
-            .addOnSuccessListener { Toast.makeText(this@AddTripActivity, "Trip Added Successfully", Toast.LENGTH_LONG).show() }
-            .addOnFailureListener { Toast.makeText(this@AddTripActivity, it.message.toString(), Toast.LENGTH_SHORT).show() }
+            .addOnSuccessListener {
+                Toast.makeText(
+                    this@AddTripActivity,
+                    "Trip Added Successfully",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    this@AddTripActivity,
+                    it.message.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
-    fun onRadioButtonClicked(view: View){
+    fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             // Is the button now checked?
             val checked = view.isChecked

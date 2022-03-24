@@ -28,8 +28,8 @@ class TripDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Trip Details"
 
-        if(intent.hasExtra("ownerOfTrip")){
-            if(intent.getStringExtra("ownerOfTrip") == "true"){
+        if (intent.hasExtra("ownerOfTrip")) {
+            if (intent.getStringExtra("ownerOfTrip") == "true") {
                 binding.btnSchedule.isEnabled = false
             }
         }
@@ -46,9 +46,9 @@ class TripDetailActivity : AppCompatActivity() {
             binding.txtViewDateDetail.text = trip.date
             binding.txtViewTimeDetail.text = trip.time
             binding.txtViewNoOfPeopleDetail.text = trip.noOfPeople
-            if(trip.lookingFor.equals("Rider")){
+            if (trip.lookingFor.equals("Rider")) {
                 binding.txtViewLookinForDetail.text = "Rider"
-            } else if( trip.lookingFor.equals("Driver")){
+            } else if (trip.lookingFor.equals("Driver")) {
                 binding.txtViewLookinForDetail.text = "Driver"
             }
 
@@ -86,7 +86,7 @@ class TripDetailActivity : AppCompatActivity() {
                     for (scheduleSnapshot in snapshot.children) {
                         val request = scheduleSnapshot.getValue(ScheduleRequestInfo::class.java)
                         if (request != null) {
-                            if(request.requesterId == myId && request.tripOwnerId == tripOwnerId && request.rideId == tripId && request.status == "pending"){
+                            if (request.requesterId == myId && request.tripOwnerId == tripOwnerId && request.rideId == tripId && request.status == "pending") {
                                 rideExist = 0
                                 binding.btnSchedule.isEnabled = false
                                 binding.btnSchedule.text = "Request Exist"
@@ -95,6 +95,7 @@ class TripDetailActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }

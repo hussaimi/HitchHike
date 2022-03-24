@@ -31,6 +31,7 @@ class HomePageActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
     // added logout option in homepage.
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
@@ -38,7 +39,7 @@ class HomePageActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) : Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logoutMenu -> {
                 logout()
