@@ -45,7 +45,7 @@ class TripDetailActivity : AppCompatActivity() {
             binding.txtViewDescDetail.text = trip.desc
             binding.txtViewDateDetail.text = trip.date
             binding.txtViewTimeDetail.text = trip.time
-            binding.txtViewNoOfPeopleDetail.text = trip.noOfPeople
+//            binding.txtViewNoOfPeopleDetail.text = trip.noOfPeople
             if (trip.lookingFor.equals("Rider")) {
                 binding.txtViewLookinForDetail.text = "Rider"
             } else if (trip.lookingFor.equals("Driver")) {
@@ -58,7 +58,7 @@ class TripDetailActivity : AppCompatActivity() {
         scheduleDbReference = FirebaseDatabase.getInstance().getReference("ScheduleRequests")
 
         //check if the request already exist in database using dataSnapshot.
-        checkRequestExistence()
+        //checkRequestExistence()
 
         binding.btnSchedule.setOnClickListener {
             val status = "pending"

@@ -146,30 +146,6 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:text="@string/no_of_people"
-                android:textColor="#040303"
-                android:textSize="17sp" />
-
-            <Spinner
-                android:id="@+id/spinnerNoOfPeople"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:ems="10"
-                android:textAlignment="viewEnd" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="0.32"
                 android:text="@string/looking_for"
                 android:textColor="#040303"
@@ -226,3 +202,27 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<LinearLayout-->
+<!--android:layout_width="fill_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:orientation="horizontal"-->
+<!--android:paddingTop="10dp"-->
+<!--android:paddingBottom="10dp">-->
+
+<!--<TextView-->
+<!--    android:layout_width="0dp"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_weight="0.25"-->
+<!--    android:text="@string/no_of_people"-->
+<!--    android:textColor="#040303"-->
+<!--    android:textSize="17sp" />-->
+
+<!--<Spinner-->
+<!--    android:id="@+id/spinnerNoOfPeople"-->
+<!--    android:layout_width="0dp"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_weight="0.1"-->
+<!--    android:ems="10"-->
+<!--    android:textAlignment="viewEnd" />-->
+<!--</LinearLayout>-->
