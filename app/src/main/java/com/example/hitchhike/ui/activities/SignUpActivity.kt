@@ -34,10 +34,6 @@ class SignUpActivity : AppCompatActivity() {
                 binding.editTextFullName.error = "Name is Required"
                 return@setOnClickListener
             }
-            if (TextUtils.isEmpty(binding.editTextUserId.text.toString().trim())) {
-                binding.editTextUserId.error = "Username is Required"
-                return@setOnClickListener
-            }
             if (TextUtils.isEmpty(binding.editTextEmail.text.toString().trim())) {
                 binding.editTextEmail.error = "Email is Required"
                 return@setOnClickListener
