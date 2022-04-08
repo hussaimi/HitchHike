@@ -194,9 +194,8 @@ class MainActivity : AppCompatActivity(), DashboardAdapter.OnItemClickListener,
                                     }
                                 } else
                                     if (trip.lookingFor.equals(userIs)) {
-                                        if (trip.from.equals(fromLocation.text.toString()) && trip.to.equals(
-                                                toLocation.text.toString()
-                                            )
+                                        if (trip.from?.lowercase()?.trim().equals(fromLocation.text.toString().lowercase().trim()) &&
+                                            trip.to?.lowercase()?.trim().equals(toLocation.text.toString().lowercase().trim())
                                         ) { //&& trip.userType.equals(userType)
                                             validTripArrayList.clear()
                                             validTripIdArrayList.clear()

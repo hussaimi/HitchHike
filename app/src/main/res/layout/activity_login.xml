@@ -72,6 +72,7 @@
         android:layout_marginRight="20dp"
         android:gravity="center"
         android:text="@string/create_new_account_sign_up"
+        android:textSize="16sp"
         android:onClick="onCreateAccountClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

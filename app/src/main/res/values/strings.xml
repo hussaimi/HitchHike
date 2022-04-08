@@ -41,8 +41,8 @@
     <string name="enter_password">Enter Password</string>
     <string name="enter_phone_number">Enter Phone Number</string>
     <string name="sign_up">Sign Up</string>
-    <string name="already_have_an_account">Already have an account?</string>
-    <string name="create_new_account_sign_up">Create New Account? Sign Up</string>
+    <string name="already_have_an_account"><u>Already have an account?</u></string>
+    <string name="create_new_account_sign_up"><u>Create New Account/Sign Up</u></string>
     <string name="sign_in">Sign In</string>
     <string name="enter_username">Enter Username</string>
     <string name="notifications">Notifications</string>
@@ -51,4 +51,8 @@
     <string name="phone_number">Phone Number:</string>
     <string name="email">Email:</string>
     <string name="navigate_to_google_maps">Navigate to Google Maps</string>
+    <string name="password_hint_goes_here">Password Should Contain: \nCapital Letter \nNumber</string>
+    <string name="payment_and_other_details">Payment and other details</string>
+    <string name="enter_from_location">Start City Name</string>
+    <string name="destination_city_name">Destination City Name</string>
 </resources>

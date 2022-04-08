@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.68"
                 android:ems="10"
-                android:hint="enter from location" />
+                android:hint="@string/enter_from_location" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.68"
                 android:ems="10"
-                android:hint="enter to location" />
+                android:hint="@string/destination_city_name" />
         </LinearLayout>
 
         <LinearLayout
@@ -80,8 +80,9 @@
                 android:layout_weight="0.68"
                 android:ems="10"
                 android:gravity="top|start"
+                android:hint="@string/payment_and_other_details"
                 android:inputType="textMultiLine"
-                android:lines="3" />
+                android:lines="4" />
         </LinearLayout>
 
         <LinearLayout

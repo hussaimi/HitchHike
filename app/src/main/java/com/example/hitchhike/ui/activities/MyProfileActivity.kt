@@ -3,13 +3,10 @@ package com.example.hitchhike.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.core.text.set
 import androidx.core.view.isInvisible
 import com.example.hitchhike.databinding.ActivityMyProfileBinding
-import com.example.hitchhike.model.TripsInfo
 import com.example.hitchhike.model.userInfo
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase

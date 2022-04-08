@@ -6,7 +6,6 @@ import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import com.example.hitchhike.databinding.ActivityMyRidesDetailBinding
 import com.example.hitchhike.model.TripsInfo
 import com.example.hitchhike.model.userInfo
