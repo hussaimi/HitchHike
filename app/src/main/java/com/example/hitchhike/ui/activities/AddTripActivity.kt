@@ -12,6 +12,7 @@ import java.util.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.hitchhike.R
+import com.example.hitchhike.databinding.ActivityAddTripBinding
 import com.example.hitchhike.model.TripsInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -25,52 +26,26 @@ import java.time.format.FormatStyle
 
 class AddTripActivity : AppCompatActivity() {
 
-    val cal: Calendar by lazy { Calendar.getInstance() }
-    private val fromLocation: EditText by lazy { findViewById(R.id.editTextFrom) }
-    private val toLocation: EditText by lazy { findViewById(R.id.editTextTo) }
-    private val description: EditText by lazy { findViewById(R.id.editTextDescription) }
-    private val textViewDate: TextView by lazy { findViewById(R.id.textViewDate) }
-    private val textViewTime: TextView by lazy { findViewById(R.id.textViewTime) }
+    private val cal: Calendar by lazy { Calendar.getInstance() }
     private val radioButtonDriver: RadioButton by lazy { findViewById(R.id.radioBtnDriver) }
     private val radioButtonRider: RadioButton by lazy { findViewById(R.id.radioBtnRider) }
-    private var noOfPeople: String? = null
     private var lookingFor: String? = null
-    private val saveButton: Button by lazy { findViewById(R.id.btnSubmit) }
     private lateinit var dbReference: DatabaseReference
+    private var isDateSelected: Boolean = false
+    private var isTimeSelected: Boolean = false
+    private lateinit var binding: ActivityAddTripBinding
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_trip)
+        binding = ActivityAddTripBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Add Trip"
 
         val mTimePicker: TimePickerDialog
         val hour = cal.get(Calendar.HOUR_OF_DAY)
         val minute = cal.get(Calendar.MINUTE)
-        val spinner = findViewById<Spinner>(R.id.spinnerNoOfPeople)
-
-        val numberArray = resources.getStringArray(R.array.numberOfPeopleArray)
-        if (spinner != null) {
-            val adapter = ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item, numberArray
-            )
-            spinner.adapter = adapter
-            spinner.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
-                ) {
-                    noOfPeople = numberArray[position]
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
-                }
-            }
-        }
 
         val dateSetListener =
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
@@ -80,7 +55,7 @@ class AddTripActivity : AppCompatActivity() {
                 updateDateInView()
             }
 
-        textViewDate.setOnClickListener {
+        binding.textViewDate.setOnClickListener {
             DatePickerDialog(
                 this@AddTripActivity,
                 dateSetListener,
@@ -92,22 +67,53 @@ class AddTripActivity : AppCompatActivity() {
         }
 
         mTimePicker = TimePickerDialog(this,
-            { _, hourOfDay, minute -> textViewTime.text = updateTime(hourOfDay, minute) },
+            { _, hourOfDay, minute -> binding.textViewTime.text = updateTime(hourOfDay, minute) },
             hour,
             minute,
             false
         )
 
-        textViewTime.setOnClickListener {
+        binding.textViewTime.setOnClickListener {
             mTimePicker.show()
         }
 
         //getting firebase database reference
         dbReference = Firebase.database.reference
 
-        saveButton.setOnClickListener {
-            writeNewTrip()
-            onBackPressed()
+        binding.btnSubmit.setOnClickListener {
+            binding.textViewDate.error = null
+            binding.textViewTime.error = null
+            binding.radioBtnDriver.error = null
+            when{
+                binding.editTextFrom.text.isEmpty() ->{
+                    binding.editTextFrom.error = "Required"
+                    return@setOnClickListener
+                }
+                binding.editTextTo.text.isEmpty() -> {
+                    binding.editTextTo.error = "Required"
+                    return@setOnClickListener
+                }
+                binding.editTextDescription.text.isEmpty() -> {
+                    binding.editTextDescription.error = "Required"
+                    return@setOnClickListener
+                }
+                !isDateSelected -> {
+                    binding.textViewDate.error ="Required"
+                    return@setOnClickListener
+                }
+                !isTimeSelected -> {
+                    binding.textViewTime.error = "Required"
+                    return@setOnClickListener
+                }
+                (!binding.radioBtnDriver.isChecked && !binding.radioBtnRider.isChecked) -> {
+                    binding.radioBtnDriver.error = "Required"
+                    return@setOnClickListener
+                }
+                else -> {
+                    writeNewTrip()
+                    onBackPressed()
+                }
+            }
         }
     }
 
@@ -120,38 +126,32 @@ class AddTripActivity : AppCompatActivity() {
     private fun updateDateInView() {
         val myFormat = "MM/dd/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        textViewDate.text = sdf.format(cal.time)
-        Toast.makeText(
-            this,
-            LocalDate.parse(textViewDate.text, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
-                .toString(),
-            Toast.LENGTH_SHORT
-        ).show()
+        isDateSelected = true
+        binding.textViewDate.text = sdf.format(cal.time)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateTime(hourOfDay: Int, minutes: Int): String {
         //16:20:00 AM
         var time = LocalTime.of(hourOfDay, minutes)
+        isTimeSelected = true
         return time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM))
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun writeNewTrip() {
-        val fLocation = fromLocation.text.toString()
-        val tLocation = toLocation.text.toString()
-        val desc = description.text.toString()
-        val date =
-            textViewDate.text.toString()
-        val time =
-            textViewTime.text.toString()
+        val fLocation = binding.editTextFrom.text.toString()
+        val tLocation = binding.editTextTo.text.toString()
+        val desc = binding.editTextDescription.text.toString()
+        val date = binding.textViewDate.text.toString()
+        val time = binding.textViewTime.text.toString()
         val trip = TripsInfo(
             fLocation,
             tLocation,
             desc,
             date,
             time,
-            noOfPeople,
+            1.toString(),
             lookingFor,
             FirebaseAuth.getInstance().uid.toString()
         )

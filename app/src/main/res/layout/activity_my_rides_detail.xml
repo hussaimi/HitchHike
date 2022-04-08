@@ -23,6 +23,14 @@
         <include
             android:id="@+id/personDetail"
             layout="@layout/person_details" />
+
+        <Button
+            android:id="@+id/btnNavigate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/navigate_to_google_maps"
+            android:backgroundTint="#3A50C6"/>
     </LinearLayout>
 
 

@@ -33,7 +33,7 @@ class NotificationDetailActivity : AppCompatActivity() {
         dbReference = Firebase.database.reference
 
         if (scheduleRequestKey != null) {
-            Toast.makeText(this, scheduleRequestKey, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, scheduleRequestKey, Toast.LENGTH_SHORT).show()
         }
 
         //fetching trip information from firebase for selected trip

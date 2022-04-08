@@ -133,7 +133,6 @@ class MainActivity : AppCompatActivity(), DashboardAdapter.OnItemClickListener,
 
     override fun onStart() {
         super.onStart()
-        scheduleRequestArrayList.clear()
     }
 
     private fun getRequestData(validTrip: ArrayList<String>) {
@@ -145,6 +144,7 @@ class MainActivity : AppCompatActivity(), DashboardAdapter.OnItemClickListener,
                 }
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     scheduleRequestArrayList.clear()
+                    scheduleRequestKeyArrayList.clear()
                     dataSnapshot.children.forEach { childSnapshot ->
                         val request = childSnapshot.getValue(ScheduleRequestInfo::class.java)
                         if (request != null) {
